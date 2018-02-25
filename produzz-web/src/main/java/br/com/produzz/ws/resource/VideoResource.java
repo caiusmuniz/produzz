@@ -140,8 +140,8 @@ public class VideoResource extends GenericResource {
 //            headers.add("content-disposition", "attachment; filename=" + video.getFilename());
 
             // Split the mimeType into primary and sub types
-            String primaryType = video.getMimeType().split("/")[0];
-            String subType = video.getMimeType().split("/")[1];
+//            String primaryType = video.getMimeType().split("/")[0];
+//            String subType = video.getMimeType().split("/")[1];
 
 //            headers.setContentType( new org.springframework.http.MediaType(primaryType, subType) );
 
