@@ -1,0 +1,46 @@
+<div class="login-wrapper">
+	<div class="text-center">
+		<h2 class="fadeInUp animation-delay10" style="font-weight:bold">
+			<span class="text-success">Produzz</span> <span style="color:#ccc; text-shadow:0 1px #fff">Plataforma</span>
+		</h2>
+	</div>
+	<div class="login-widget animation-delay1">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<i class="fa fa-plus-circle fa-lg"></i> Nova Senha
+			</div>
+			<div class="panel-body">
+				<div class="form-group">
+					Preencha seu endereço de e-mail abaixo para receber uma nova senha.
+				</div><!-- /form-group -->
+
+                <div ng-include="'views/alertMessage.html'"></div>
+
+				<form class="form-login" name="forgotForm" novalidate>
+					<div class="form-group" ng-class="{ 'has-error' : forgotForm.email.$invalid && !forgotForm.email.$pristine }">
+						<label>E-mail</label>
+						<input type="email" placeholder="E-mail" name="email" class="form-control" autocomplete="off"
+								ng-model="contato.email" ng-required="true" ng-pattern="/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/" />
+						<span ng-show="forgotForm.email.$error.required && !forgotForm.email.$pristine" class="help-block">Campo obrigatorio.</span>
+						<span ng-show="forgotForm.email.$error.pattern && !forgotForm.email.$pristine" class="help-block">Digite um email valido.</span>
+					</div><!-- /form-group -->
+                    
+					<div class="seperator"></div>
+                    
+                    <div class="form-group">
+						Lembrou sua senha?<br/>
+						Clique <a href="#/login" class="primary-font">aqui</a> para novo login
+					</div><!-- /form-group -->
+                    
+                    <hr/>
+                    
+					<div class="form-group">
+						<div class="controls text-right">
+							<button type="button" class="btn btn-success btn-sm" ng-click="forgot(contato.email)" ng-disabled="forgotForm.$invalid"><i class="fa fa-plus-circle"></i> Recuperar</button>
+						</div>
+					</div><!-- /form-group -->
+				</form>
+			</div>
+		</div><!-- /panel -->
+	</div><!-- /login-widget -->
+</div><!-- /login-wrapper -->

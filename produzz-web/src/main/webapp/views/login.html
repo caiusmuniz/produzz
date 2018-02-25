@@ -1,0 +1,83 @@
+<div class="login-wrapper">
+	<div class="text-center">
+		<h2 class="fadeInUp animation-delay8" style="font-weight:bold">
+			<span class="text-success">Produzz</span> <span style="color:#ccc; text-shadow:0 1px #fff">Plataforma</span>
+		</h2>
+	</div>
+	<div class="login-widget animation-delay1">	
+		<div class="panel panel-default">
+			<div class="panel-heading clearfix">
+				<div class="pull-left">
+					<i class="fa fa-lock fa-lg"></i> Login
+				</div>
+				<div class="pull-right">
+					<span style="font-size:11px;">Não tem conta?</span>
+					<a class="btn btn-default btn-xs" href="#/register" style="margin-top:-2px;"><i class="fa fa-plus-circle"></i> Cadastre-se</a>
+				</div>
+			</div>
+			<div class="panel-body">
+                <div ng-include="'views/alertMessage.html'"></div>
+
+				<form novalidate class="form-login" name="loginForm">
+					<div class="form-group">
+						<button class="facebook-login btn-lg btn-block" type="button" onclick="logarFacebook();">
+							<i class="fa fa-2x fa-facebook-official pull-left"></i>Login com Facebook
+						</button>
+					</div>
+
+					<div class="form-group">
+						<button class="google-login btn-lg btn-block" type="button" onclick="logarGoogle();">
+							<i class="pull-left" style="margin-left:-9px; margin-top:-3px"><img height="30px" width="30px" src="images/btn_google_signin"></i> Login com Google
+						</button>
+					</div>
+
+					<div class="seperator"></div>
+
+					<div class="form-group" ng-class="{ 'has-error' : loginForm.email.$invalid && !loginForm.email.$pristine }">
+						<label>E-mail</label>
+						<input type="email" placeholder="E-mail" id="email" name="email" class="form-control" autocomplete="off" 
+								ng-model="contato.email" ng-required="true" ng-pattern="/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/" />
+                        <div class="help-block" ng-messages="loginForm.email.$error" ng-show="loginForm.email.$error && !loginForm.email.$pristine">
+                            <span ng-message="required">Campo obrigatorio.</span>
+                            <span ng-message="pattern">Digite um email valido.</span>
+                        </div>
+					</div><!-- /form-group -->
+                    
+					<div class="form-group" ng-class="{ 'has-error' : loginForm.password.$invalid && !loginForm.password.$pristine }">
+						<label>Senha</label>
+						<input type="password" placeholder="Senha" name="password" class="form-control" autocomplete="off"
+								ng-model="contato.password" ng-required="true" ng-minlength="6" />
+                        <div class="help-block" ng-messages="loginForm.password.$error" ng-show="loginForm.password.$error && !loginForm.password.$pristine">
+                            <span ng-message="required">Campo obrigatorio.</span>
+                            <span ng-message="minlength">Exige no mínimo 6 caracteres.</span>
+                        </div>
+					</div><!-- /form-group -->
+                    
+					<!--div class="form-group">
+						<label class="label-checkbox inline">
+							<input type="checkbox" id="lembre-me" class="regular-checkbox chk-delete" ng-model="lembreDeMim" />
+							<span class="custom-checkbox info bounceIn animation-delay4"></span>
+						</label>
+						Lembre de mim
+					</div--><!-- /form-group -->
+
+					<div class="seperator"></div>
+                    
+					<div class="form-group">
+						Esqueceu sua senha?<br/>
+						Clique <a href="#/forgot" class="primary-font">aqui</a> para nova senha
+					</div><!-- /form-group -->
+
+					<hr/>
+                    
+                    <div class="form-group">
+						<div class="controls text-right">
+							<button type="submit" class="btn btn-success btn-sm" ng-click="logon(contato.email,contato.password)" ng-disabled="loginForm.$invalid"><i class="fa fa-sign-in"></i> Login</button>
+						</div>
+					</div><!-- /form-group -->
+
+				</form>
+			</div>
+		</div><!-- /panel -->
+	</div><!-- /login-widget -->
+</div><!-- /login-wrapper -->

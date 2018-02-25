@@ -1,0 +1,75 @@
+<div class="login-wrapper">
+	<div class="text-center">
+		<h2 class="fadeInUp animation-delay10" style="font-weight:bold">
+			<span class="text-success">Produzz</span> <span style="color:#ccc; text-shadow:0 1px #fff">Plataforma</span>
+		</h2>
+	</div>
+	<div class="login-widget animation-delay1">	
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<i class="fa fa-plus-circle fa-lg"></i> Cadastro
+			</div>
+			<div class="panel-body">
+                <div ng-include="'views/alertMessage.html'"></div>
+
+				<form novalidate class="form-login" name="registerForm">
+					<div class="form-group" ng-class="{ 'has-error' : registerForm.nome.$invalid && !registerForm.nome.$pristine }">
+						<label>Nome</label>
+						<input type="text" placeholder="Nome" name="nome" class="form-control" autocomplete="off"
+								ng-model="contato.nome" ng-required="true" />
+						<span ng-show="registerForm.nome.$error.required && !registerForm.nome.$pristine" class="help-block">Campo obrigatorio.</span>
+					</div><!-- /form-group -->
+                    
+					<div class="form-group" ng-class="{ 'has-error' : registerForm.sobrenome.$invalid && !registerForm.sobrenome.$pristine }">
+						<label>Sobrenome</label>
+						<input type="text" placeholder="Sobrenome" name="sobrenome" class="form-control" autocomplete="off"
+								ng-model="contato.sobrenome" ng-required="true" />
+						<span ng-show="registerForm.sobrenome.$error.required && !registerForm.sobrenome.$pristine" class="help-block">Campo obrigatorio.</span>
+					</div><!-- /form-group -->
+                    
+					<div class="form-group" ng-class="{ 'has-error' : registerForm.email.$invalid && !registerForm.email.$pristine }">
+						<label>E-mail</label>
+						<input type="email" placeholder="E-mail" name="email" class="form-control" autocomplete="off"
+								ng-model="contato.email" ng-required="true" ng-pattern="/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/" />
+						<span ng-show="registerForm.email.$error.required && !registerForm.email.$pristine" class="help-block">Campo obrigatorio.</span>
+						<span ng-show="registerForm.email.$error.pattern && !registerForm.email.$pristine" class="help-block">Digite um email valido.</span>
+					</div><!-- /form-group -->
+                    
+					<div class="form-group" ng-class="{ 'has-error' : registerForm.password.$invalid && !registerForm.password.$pristine }">
+						<label>Senha</label>
+						<input type="password" placeholder="Senha" name="password" class="form-control" autocomplete="off"
+								ng-model="contato.password" ng-required="true" ng-minlength="6" />
+						<span ng-show="registerForm.password.$error.required && !registerForm.password.$pristine" class="help-block">Campo obrigatorio.</span>
+						<span ng-show="registerForm.password.$error.minlength && !registerForm.password.$pristine" class="help-block">Exige no mínimo 6 caracteres.</span>
+					</div><!-- /form-group -->
+                    
+					<div class="form-group" ng-class="{ 'has-error' : registerForm.confirma.$invalid && contato.confirma != contato.password && !registerForm.confirma.$pristine }">
+						<label>Confirma Senha</label>
+						<input type="password" placeholder="Confirma senha" name="confirma" class="form-control" autocomplete="off"
+								ng-model="contato.confirma" ng-required="true" ng-minlength="6" />
+						<span ng-show="registerForm.confirma.$error.required && !registerForm.confirma.$pristine" class="help-block">Campo obrigatorio.</span>
+						<span ng-show="registerForm.confirma.$error.minlength && !registerForm.confirma.$pristine" class="help-block">Exige no mínimo 6 caracteres.</span>
+						<span ng-show="contato.confirma != contato.password && !registerForm.confirma.$pristine" class="help-block">Os campos Senha e Confirmaçao Senha devem ser identicos</span> 
+					</div><!-- /form-group -->
+
+					<div class="seperator"></div>
+                    
+					<div class="form-group">
+                        Ja tem uma conta?<br/> 
+                        Clique <a href="#/login" class="primary-font login-link">aqui</a> para novo login
+					</div><!-- /form-group -->
+                    
+					<hr/>
+                    
+					<div class="form-group">
+						<div class="controls text-right">
+							<button type="button" class="btn btn-success btn-sm" id="btn_Salvar" ng-click="register(contato)" ng-disabled="registerForm.$invalid">
+									<i class="fa fa-plus-circle"></i> Cadastrar
+							</button>
+						</div>
+					</div><!-- /form-group -->
+				</form>
+			</div>
+		</div><!-- /panel -->
+	</div><!-- /login-widget -->
+</div><!-- /login-wrapper -->

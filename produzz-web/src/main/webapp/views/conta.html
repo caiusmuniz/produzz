@@ -1,0 +1,172 @@
+<div id="main-container">
+	<div id="breadcrumb">
+		<ul class="breadcrumb">
+			<li><i class="fa fa-home"></i><a href="dashboard.html"> Home</a></li>
+			<li class="active">Dados da empresa</li>	 
+		</ul>
+	</div><!-- breadcrumb -->
+
+	<!-- Criar novo -->
+	<div class="padding-md">
+		<div class="row padding-md">
+			<div class="col-md-12">
+				<div class="page-title">
+					<h3 class="no-margin">Dados da empresa</h3>
+					<span>Informações dos dados da empresa</span>
+				</div><!-- /page-title -->
+			</div>
+		</div>
+	</div>
+
+	<div class="panel panel-default padding-md">
+		<div class="panel-body">
+			<div ng-include="'views/alertMessage.html'"></div>
+
+			<form novalidate name="contaForm" class="form-horizontal no-margin form-border" novalidate>
+				<div class="form-group hide">
+					<input name="id" type="text" ng-model="conta.id" /><!-- INFORMACAO DE IDENTIFICACAO UNICA DA CONTA -->
+				</div>
+
+				<div class="form-group" ng-class="{ 'has-error' : contaForm.empresa.$invalid && !contaForm.empresa.$pristine }">
+					<div class="row">
+						<label class="col-lg-2 control-label">Empresa</label>
+						<div class="col-lg-10">
+							<input name="empresa" class="form-control input-sm" type="text" placeholder="Nome da empresa..." autocomplete="off"
+									ng-model="conta.empresa" ng-required="true" />
+							<span ng-show="contaForm.empresa.$error.required && !contaForm.empresa.$pristine" class="help-block">Campo obrigatorio.</span>
+						</div><!-- /.col -->
+					</div>
+				</div><!-- /form-group -->
+
+				<div class="form-group" ng-class="{ 'has-error' : contaForm.segmento.$invalid && !contaForm.segmento.$pristine }">
+                    <div class="row">
+                        <label class="col-lg-2 control-label">Segmento</label>
+                        <div class="col-lg-10">
+							<select name="segmento" class="form-control" ng-model="conta.atividadeEconomica" ng-init="conta.atividadeEconomica"
+									ng-options="atividadeEconomica.nome group by atividadeEconomica.segmento for atividadeEconomica in atividades | orderBy:'id'"></select>
+                        </div><!-- /.col -->
+                    </div>
+                </div><!-- /form-group -->
+
+                <div class="form-group" ng-class="{ 'has-error' : contaForm.ddi.$invalid && !contaForm.ddi.$pristine }">
+                    <div class="row">
+                        <label class="col-lg-2 control-label">DDI</label>
+                        <div class="col-lg-2">
+                            <input name="ddi" class="form-control  input-sm" placeholder="55..." type="text" autocomplete="off"
+                            		ng-model="conta.ddi" ng-pattern="/^[0-9]{2}$/" />
+                            <span ng-show="contaForm.ddi.$error.required && !contaForm.ddi.$pristine" class="help-block">Campo obrigatorio.</span>
+                        </div><!-- /.col -->
+                    </div>
+                </div><!-- /form-group -->
+
+                <div class="form-group" ng-class="{ 'has-error' : contaForm.ddd.$invalid && !contaForm.ddd.$pristine }">
+                    <div class="row">
+                        <label class="col-lg-2 control-label">DDD</label>
+                        <div class="col-lg-2">
+                            <input name="ddd" class="form-control  input-sm" placeholder="21..." type="text" autocomplete="off"
+                            		ng-model="conta.ddd" ng-pattern="/^[0-9]{2}$/" />
+                            <span ng-show="contaForm.ddd.$error.required && !contaForm.ddd.$pristine" class="help-block">Campo obrigatorio.</span>
+                        </div><!-- /.col -->
+                    </div>
+                </div><!-- /form-group -->
+
+                <div class="form-group" ng-class="{ 'has-error' : contaForm.telefone.$invalid && !contaForm.telefone.$pristine }">
+                    <div class="row">
+                        <label class="col-lg-2 control-label">Telefone</label>
+                        <div class="col-lg-2">
+                            <input name="telefone" class="form-control  input-sm" placeholder="99999-9999" type="text" autocomplete="off"
+                            		ng-model="conta.telefone" ng-pattern="/^[0-9]{9}$/" />
+                            <span ng-show="contaForm.telefone.$error.required && !contaForm.telefone.$pristine" class="help-block">Campo obrigatorio.</span>
+                        </div><!-- /.col -->
+                    </div>
+                </div><!-- /form-group -->
+
+                <div class="form-group" ng-class="{ 'has-error' : contaForm.cep.$invalid && !contaForm.cep.$pristine }">
+                    <div class="row">
+                        <label class="col-lg-2 control-label">CEP</label>
+                        <div class="col-lg-2">
+                            <input name="cep" class="form-control input-sm" placeholder="00000000" type="text" autocomplete="off"
+                            		ng-model="conta.cep" ng-required="true" ng-pattern="/^[0-9]{8}$/" />
+                            <span ng-show="contaForm.cep.$error.required && !contaForm.cep.$pristine" class="help-block">Campo obrigatorio.</span>
+                            <span ng-show="contaForm.cep.$error.pattern && !contaForm.cep.$pristine" class="help-block">Digite um CEP valido.</span>
+                        </div><!-- /.col -->
+                    </div>
+                </div><!-- /form-group -->
+
+                <div class="form-group" ng-class="{ 'has-error' : contaForm.endereco.$invalid && !contaForm.endereco.$pristine }">
+                    <div class="row">
+                        <label class="col-lg-2 control-label">Endereço</label>
+                        <div class="col-lg-6">
+                            <input name="endereco" class="form-control input-sm" type="text" autocomplete="off"
+                            		ng-model="conta.endereco" ng-required="true" />
+                            <span ng-show="contaForm.endereco.$error.required && !contaForm.endereco.$pristine" class="help-block">Campo obrigatorio.</span>
+                        </div><!-- /.col -->
+                    </div>
+                </div><!-- /form-group -->
+
+                <div class="form-group" ng-class="{ 'has-error' : contaForm.numero.$invalid && !contaForm.numero.$pristine }">
+                    <div class="row">
+                        <label class="col-lg-2 control-label">Número</label>
+                        <div class="col-lg-2">
+                            <input name="numero" ng-model="conta.numero" class="form-control input-sm" type="text" autocomplete="off"
+                            		ng-required="true" />
+                            <span ng-show="contaForm.numero.$error.required && !contaForm.numero.$pristine" class="help-block">Campo obrigatorio.</span>
+                        </div><!-- /.col -->
+                    </div>
+                </div><!-- /form-group -->
+
+                <div class="form-group">
+                    <div class="row">
+                        <label class="col-lg-2 control-label">Complemento</label>
+                        <div class="col-lg-2">
+                            <input name="complemento" class="form-control input-sm" type="text" autocomplete="off"
+                            		ng-model="conta.complemento" />
+                        </div><!-- /.col -->
+                    </div>
+                </div><!-- /form-group -->
+
+                <div class="form-group" ng-class="{ 'has-error' : contaForm.municipio.$invalid && !contaForm.municipio.$pristine }">
+                    <div class="row">
+                        <label class="col-lg-2 control-label">Município</label>
+                        <div class="col-lg-5">
+                            <input name="municipio" class="form-control input-sm" type="text" autocomplete="off"
+                            		ng-model="conta.municipio" ng-required="true" />
+                            <span ng-show="contaForm.municipio.$error.required && !contaForm.municipio.$pristine" class="help-block">Campo obrigatorio.</span>
+                        </div><!-- /.col -->
+                    </div>
+                </div><!-- /form-group -->
+
+                <div class="form-group" ng-class="{ 'has-error' : contaForm.estado.$invalid && !contaForm.estado.$pristine }">
+                    <div class="row">
+                        <label class="col-lg-2 control-label">Estado</label>
+                        <div class="col-lg-5">
+                            <input name="estado" class="form-control input-sm" type="text" autocomplete="off"
+                            		ng-model="conta.estado" ng-required="true"/>
+                            <span ng-show="contaForm.estado.$error.required && !contaForm.estado.$pristine" class="help-block">Campo obrigatorio.</span>
+                        </div><!-- /.col -->
+                    </div>
+                </div><!-- /form-group -->
+
+                <div class="form-group" ng-class="{ 'has-error' : contaForm.pais.$invalid && !contaForm.pais.$pristine }">
+                    <div class="row">
+                        <label class="col-lg-2 control-label">País</label>
+                        <div class="col-lg-5">
+                            <input name="pais" class="form-control input-sm" type="text" autocomplete="off"
+                            		ng-model="conta.pais" ng-required="true" />
+                            <span ng-show="contaForm.pais.$error.required && !contaForm.pais.$pristine" class="help-block">Campo obrigatorio.</span>
+                        </div><!-- /.col -->
+                    </div>
+                </div><!-- /form-group -->
+
+                <div class="seperator"></div>
+
+                <div class="form-group text-center">
+                    <div class="col-lg-12">
+                        <button class="btn btn-info" ng-click="update(conta)" ng-disabled="contaForm.$invalid">Salvar</button>
+                        <a href="#/dashboard" class="btn btn-default">Cancelar</a>
+                    </div><!-- /.col -->
+                </div><!-- /form-group -->
+            </form>
+        </div> <!-- /panel-body -->
+    </div> <!-- /panel-default -->
+</div><!-- /main-container -->

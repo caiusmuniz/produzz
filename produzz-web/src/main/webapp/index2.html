@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html ng-app="produzzApp" xmlns="http://www.w3.org/1999/xhtml" lang="pt-br" xml:lang="pt-br">
+<head>
+ 	<title>Produzz Plataforma</title>
+	<meta charset="utf-8">
+	<meta http-equiv="Content-Language" content="pt-br">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width,maximum-scale=1,initial-scale=1.0, user-scalable=yes">
+	<meta name="description" content="Produzz Plataforma">
+	<meta name="author" content="Caius Muniz">
+	<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+	<meta http-equiv="Pragma" content="no-cache" />
+	<meta http-equiv="Expires" content="0" />
+	<meta name="keywords" itemprop="keywords"
+			content="video distribution solution,online video distribution,upload videos,publish videos,share videos,promote videos,video analytics,video performance,social engagement" />
+
+	<!-- [START google_config] -->
+	<meta name="google-signin-client_id" content="591091485303-6n6ljnjd23gvm9ol0as441d313gnru46.apps.googleusercontent.com">
+	<meta name="google-signin-cookiepolicy" content="single_host_origin">
+	<meta name="google-signin-scope" content="profile email">
+	<meta name="google-site-verification" content="JG37fC43_eSNbkdnhLmuqVL7r95xqbjSNAVwVHI6PIo" />
+	<!-- [END google_config] -->
+
+ 	<link rel="shortcut icon" href="favicon.ico" />
+	<link rel="stylesheet" href="assets/components/bootstrap/dist/css/bootstrap.min.css">
+	<link rel="stylesheet" href="assets/components/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="assets/components/jquery.gritter/css/jquery.gritter.css"/>
+	<link rel="stylesheet" href="assets/endless/css/endless.min.css">
+    <link rel="stylesheet" href="assets/endless/css/endless-skin.css">
+
+	<style type="text/css">
+	.facebook-login {
+		border-style: solid;
+		border-width: 0;
+		cursor: pointer;
+		font-weight: 400;
+		line-height: normal;
+		margin: 0 0 10px;
+		position: relative;
+		text-decoration: none;
+		text-align: center;
+		-webkit-appearance: none;
+		-webkit-border-radius: 0;
+		border-radius: 0;
+		display: inline-block;
+		padding-top: 1rem;
+		padding-right: 1rem;
+		padding-bottom: 1rem;
+		padding-left: 1rem;
+		font-size: 14px;
+		line-height: 28px;
+		background-color: #4c69ba;
+		color: #fff;
+		transition: background-color .3s ease-out;
+		min-width: 260px;
+	}
+	
+	.google-login {
+		background-color: #fff;
+		width: 100%;
+		height: 49px;
+		position: relative;
+		font-size: 14px;
+		min-width: 260px;
+	}
+	</style>
+</head>
+<body>
+    <div class="container" ng-controller="mainCtrl">
+        <div id="wrapper" class="preload">
+            <div ng-include="'views/header.html'"></div>
+            <div ng-include="'views/menu.html'"></div>
+            <div ng-view></div>
+        </div><!-- /wrapper -->
+        <div ng-include="'views/footer.html'"></div>
+    </div>
+
+	<!-- INSERIR OS ARQUIVOS DE SCRIPT AQUI -->
+	<script src="assets/components/jquery/dist/jquery.min.js"></script>
+    <script src="assets/components/jquery.cookie/jquery.cookie.js"></script>
+    <script src="assets/components/jquery.gritter/js/jquery.gritter.min.js"></script>
+    <script src="assets/components/angular/angular.js"></script>
+    <script src="assets/components/angular-cookies/angular-cookies.min.js"></script>
+    <script src="assets/components/angular-messages/angular-messages.min.js"></script>
+    <script src="assets/components/angular-route/angular-route.js"></script>
+    <script src="assets/components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+    <script src="assets/components/angular-animate/angular-animate.min.js"></script>
+    <script src="assets/components/angular-sanitize/angular-sanitize.min.js"></script>
+    <script src="assets/components/angular-touch/angular-touch.min.js"></script>
+	<script src="assets/components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="assets/components/js-md5/build/md5.min.js"></script>
+    <script src="assets/components/PACE/pace.min.js"></script>
+    <script src="assets/compressed/modernizr.min.js"></script>
+    <script src="assets/other/jquery/jquery.popupoverlay.min.js"></script>
+    <script src="assets/other/jquery/jquery.slimscroll.min.js"></script>
+    <script src="assets/endless/js/endless.js"></script>
+
+	<!-- suporte a criptografia -->
+	<script type="text/javascript" charset="utf-8" src="lib/sha1.min.js"></script>
+	<script type="text/javascript" charset="utf-8" src="lib/base64.min.js"></script>
+
+    <!-- script src="scripts/angularjs-social-login.js"></script-->
+
+    <script src="scripts/app.js"></script>
+    <script src="scripts/controllers/contatoCtrl.js"></script>
+    <script src="scripts/controllers/registerCtrl.js"></script>
+    <script src="scripts/controllers/forgotCtrl.js"></script>
+    <script src="scripts/controllers/mainCtrl.js"></script>
+    <script src="scripts/controllers/dashboardCtrl.js"></script>
+    <script src="scripts/controllers/contaCtrl.js"></script>
+    <script src="scripts/controllers/pagamentoCtrl.js"></script>
+    <script src="scripts/controllers/plataformaCtrl.js"></script>
+    <script src="scripts/controllers/uploadCtrl.js"></script>
+
+    <script src="scripts/services/contatoSrv.js"></script>
+    <script src="scripts/services/registerSrv.js"></script>
+    <script src="scripts/services/forgotSrv.js"></script>
+    <script src="scripts/services/dashboardSrv.js"></script>
+    <script src="scripts/services/contaSrv.js"></script>
+    <script src="scripts/services/pagamentoSrv.js"></script>
+    <script src="scripts/services/plataformaSrv.js"></script>
+    <script src="scripts/services/uploadSrv.js"></script>
+
+    <script src="scripts/factories/webservice.js"></script>
+
+	<!-- FIREBASE -->
+	<script src="scripts/firebasejs/4.6.1/firebase.js"></script>
+	<script src="scripts/firebasejs/4.6.1/firebase-auth.js"></script>
+	<script src="scripts/firebasejs/4.6.1/firebase-messaging.js"></script>
+
+	<script>
+		var config = {
+			apiKey: "AIzaSyDRNWTAZHhnUoz0HQvb637VU6QYBFLnu4s",
+			authDomain: "produzz-plataforma.firebaseapp.com",
+			databaseURL: "https://produzz-plataforma.firebaseio.com",
+			projectId: "produzz-plataforma",
+			storageBucket: "",
+			messagingSenderId: "591091485303"
+		};
+		var app = firebase.initializeApp(config);
+		console.log('Firebase=', app.name);
+
+		firebase.auth().languageCode = 'pt_BR';
+
+		var providerFacebook = new firebase.auth.FacebookAuthProvider();
+		console.log('providerFacebook=', providerFacebook);
+
+		function logarFacebook(event) {
+			console.log("logarFacebook");
+			firebase.auth().signInWithPopup(providerFacebook).then(function(result) {
+				console.log('Sucesso=', result);
+				onSignInFacebook(result);
+			}).catch(function(error) {
+				console.log('Error=', error);
+			});
+		}
+
+		var providerGoogle = new firebase.auth.GoogleAuthProvider();
+		console.log('providerGoogle=', providerGoogle);
+
+		function logarGoogle(event) {
+			console.log("logarGoogle");
+			firebase.auth().signInWithPopup(providerGoogle).then(function(result) {
+				console.log('Sucesso=', result);
+				onSignInGoogle(result);
+			}).catch(function(error) {
+				console.log('Error=', error);
+			});
+		}
+	</script>
+
+	<!-- Google Sign In -->
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+
+	<!-- FacebookGoogle Sign In -->
+	<script src="//connect.facebook.net/pt_BR/sdk.js"></script>
+
+	<script type="text/javascript">
+		window.fbAsyncInit = function() {
+			FB.init({
+				appId : '1577724542287522',
+				status : true,
+				xfbml : true,
+				version : 'v2.11'
+			});
+		};
+
+		var providerFacebook = new firebase.auth.FacebookAuthProvider();
+		console.log('providerFacebook=' + providerFacebook);
+
+		function logarFacebook(event) {
+			console.log("logarFacebook1");
+			firebase.auth().signInWithPopup(providerFacebook).then(function(result) {
+				console.log('Sucesso! ', result);
+				onSignInFacebook(result);
+			}).catch(function(error) {
+				console.log('Error! ', error);
+			});
+		}
+
+		function logarFacebook(){
+			checkLoginState();
+		}
+
+		function checkLoginState() {
+			FB.getLoginStatus(function(response) {
+				statusChangeCallback(response);
+			});
+		}
+
+		function statusChangeCallback(response) {
+		    if (response.status === 'connected') {
+				testAPI();
+		    } else {
+		        FB.login(function(response) {
+					console.log(response);
+					if (response.authResponse) {
+						testAPI();
+					}
+				},{scope:'public_profile,email'});
+		    }
+		}
+
+		FB.getLoginStatus(function(response) {
+			statusChangeCallback(response);
+		});
+
+		function testAPI() {
+			FB.api('/me?fields=name,email', function(response) {
+				onSignInFacebook(response);
+			});
+		}
+	</script>
+</body>
+</html>

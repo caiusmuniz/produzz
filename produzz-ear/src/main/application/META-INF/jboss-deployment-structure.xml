@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jboss-deployment-structure xmlns="urn:jboss:deployment-structure:1.1">
+	<ear-subdeployments-isolated>true</ear-subdeployments-isolated>
+	<sub-deployment name="produzz-ejb-1.0.jar">
+		<dependencies>
+		    <module name="org.json" />
+		    <module name="javax.ws.rs.api" />
+		 </dependencies>
+	</sub-deployment>
+	
+	<sub-deployment name="produzz-web-1.0.war">
+		<dependencies>
+		    <module name="org.json" />
+		    <module name="javax.ws.rs.api" />
+		</dependencies>
+	</sub-deployment>
+</jboss-deployment-structure>

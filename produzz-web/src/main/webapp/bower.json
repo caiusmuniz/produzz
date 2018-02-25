@@ -1,0 +1,43 @@
+{
+  "name": "produzz-web",
+  "version": "0.0.1",
+  "description": "mobulo web onde temos a iteração entre paginas HTML e a api RESTFull da aplicação produzz",
+  "authors": [
+    "Caius Muniz"
+  ],
+  "license": "MIT",
+  "homepage": "http://www.produzz.com.br/admin",
+  "main": "assets/scripts/app.js",
+  "keywords": [
+    "produzz"
+  ],
+  "moduleType": [],
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "assets/components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular-route": "^1.5.0",
+    "angular-resource": "^1.5.0",
+    "angular-messages": "^1.5.0",
+    "angular-bootstrap": "^1.1.2",
+    "jquery": "^2.2.0",
+    "font-awesome": "^4.5.0",
+    "bootstrap": "^3.3.6",
+    "angular-cookies": "^1.5.0",
+    "jquery.cookie": "jquery-cookie#^1.4.1",
+    "angular-animate": "^1.5.0",
+    "angular-sanitize": "^1.5.0",
+    "angular-touch": "^1.5.0",
+    "angular-ui-router": "^0.2.18",
+    "jquery.gritter": "^1.7.4",
+    "PACE": "pace#^1.0.2",
+    "base64": "^0.3.0",
+    "js-md5": "md5#^0.3.0"
+  }
+}

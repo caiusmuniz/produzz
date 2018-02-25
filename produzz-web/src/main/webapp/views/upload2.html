@@ -1,0 +1,194 @@
+<div id="main-container">
+	<div id="breadcrumb">
+		<ul class="breadcrumb">
+			 <li><i class="fa fa-home"></i><a href=""> Home</a></li>
+			 <li class="active">Upload</li>
+		</ul>
+	</div><!-- /breadcrumb-->
+
+	<div class="main-header clearfix">
+		<div class="page-title">
+			<h3 class="no-margin">UPLOAD</h3>
+		</div><!-- /page-title -->
+	</div><!-- /main-header -->
+
+	<div class="padding-md">
+		<div class="col-sm-4 content-padding col-md-5">
+			<div class="text-center font-lg">
+				<h4 class="text-left"><i class="fa fa-film fa-lg"></i>Informações e Configurações</h4>
+			</div>
+
+			<form novalidate name="uploadForm" class="form-horizontal no-margin form-border" novalidate>
+				<div class="form-group hide">
+					<input name="id" type="text" ng-model="video.id" /><!-- INFORMACAO DE IDENTIFICACAO UNICA DA CONTA -->
+				</div>
+
+				<div class="form-group" ng-class="{ 'has-error' : uploadForm.titulo.$invalid && !uploadForm.titulo.$pristine }">
+					<div class="row">
+						<label class="col-lg-2 control-label">Título*</label>
+						<div class="col-lg-10">
+							<input name="titulo" class="form-control input-sm" type="text" placeholder="Título do video..." autocomplete="off"
+									ng-model="video.titulo" ng-required="true" />
+							<span ng-show="uploadForm.titulo.$error.required && !uploadForm.titulo.$pristine" class="help-block">Campo obrigatorio.</span>
+						</div><!-- /.col -->
+					</div>
+				</div><!-- /form-group -->
+
+				<div class="form-group" ng-class="{ 'has-error' : uploadForm.descricao.$invalid && !uploadForm.descricao.$pristine }">
+					<div class="row">
+						<label class="col-lg-2 control-label">Descrição</label>
+						<div class="col-lg-10">
+							<input name="descricao" class="form-control input-sm" type="text" placeholder="Descrição do video..." autocomplete="off"
+									ng-model="video.descricao" ng-required="false" />
+							<span ng-show="uploadForm.descricao.$error.required && !uploadForm.descricao.$pristine" class="help-block">Campo obrigatorio.</span>
+						</div><!-- /.col -->
+					</div>
+				</div><!-- /form-group -->
+
+				<div class="form-group" ng-class="{ 'has-error' : uploadForm.tags.$invalid && !uploadForm.tags.$pristine }">
+					<div class="row">
+						<label class="col-lg-2 control-label">Tags</label>
+						<div class="col-lg-10">
+							<input name="tags" class="form-control input-sm" type="text" placeholder="Tags..." autocomplete="off"
+									ng-model="video.tags" ng-required="false" />
+							<span ng-show="uploadForm.tags.$error.required && !uploadForm.tags.$pristine" class="help-block">Campo obrigatorio.</span>
+						</div><!-- /.col -->
+					</div>
+				</div><!-- /form-group -->
+
+				<div class="form-group" ng-class="{ 'has-error' : uploadForm.idioma.$invalid && !uploadForm.idioma.$pristine }">
+					<div class="row">
+						<label class="col-lg-4 control-label">Idioma</label>
+						<div class="col-lg-10">
+							<select class="form-control" ng-model="video.idioma">
+								<option value="af">Afrikaans</option><option value="sq">Albanian</option>
+								<option value="ar-SA">Arabic (Saudi Arabia)</option><option value="ar-IQ">Arabic (Iraq)</option>
+								<option value="ar-EG">Arabic (Egypt)</option><option value="ar-LY">Arabic (Libya)</option>
+								<option value="ar-DZ">Arabic (Algeria)</option><option value="ar-MA">Arabic (Morocco)</option>
+								<option value="ar-TN">Arabic (Tunisia)</option><option value="ar-OM">Arabic (Oman)</option>
+								<option value="ar-YE">Arabic (Yemen)</option><option value="	ar-SY">Arabic (Syria)</option>
+								<option value="ar-JO">Arabic (Jordan)</option><option value="ar-LB">Arabic (Lebanon)</option>
+								<option value="ar-KW">Arabic (Kuwait)</option><option value="ar-AE">Arabic (U.A.E.)</option>
+								<option value="ar-BH">Arabic (Bahrain)</option><option value="ar-QA">Arabic (Qatar)</option>
+								<option value="eu">Basque (Basque)</option><option value="bg">Bulgarian</option>
+								<option value="be">Belarusian</option><option value="ca">Catalan</option>
+								<option value="zh-TW">Chinese (Taiwan)</option><option value="zh-CN">Chinese (PRC)</option>
+								<option value="zh-HK">Chinese (Hong Kong SAR)</option><option value="zh-SG">Chinese (Singapore)</option>
+								<option value="hr">Croatian</option><option value="cs">Czech</option>
+								<option value="da">Danish</option><option value="nl">Dutch (Standard)</option>
+								<option value="nl-BE">Dutch (Belgium)</option><option value="en">English</option>
+								<option value="en-US">English (United States)</option><option value="en-GB">English (United Kingdom)</option>
+								<option value="en-AU">English (Australia)</option><option value="en-CA">English (Canada)</option>
+								<option value="en-NZ">English (New Zealand)</option><option value="en-IE">English (Ireland)</option>
+								<option value="en-ZA">English (South Africa)</option><option value="en-JM">English (Jamaica)</option>
+								<option value="en">English (Caribbean)</option><option value="en-BZ">English (Belize)</option>
+								<option value="en-TT">English (Trinidad)</option><option value="et">Estonian</option>
+								<option value="fo">Faeroese</option><option value="fa">Farsi</option>
+								<option value="fi">Finnish</option><option value="fr">French (Standard)</option>
+								<option value="fr-BE">French (Belgium)</option><option value="fr-CA">French (Canada)</option>
+								<option value="fr-CH">French (Switzerland)</option><option value="fr-LU">French (Luxembourg)</option>
+								<option value="gd">Gaelic (Scotland)</option><option value="ga">Irish</option>
+								<option value="de">German (Standard)</option><option value="de-CH">German (Switzerland)</option>
+								<option value="de-AT">German (Austria)</option><option value="de-LU">German (Luxembourg)</option>
+								<option value="de-LI">German (Liechtenstein)</option><option value="el">Greek</option>
+								<option value="he">Hebrew</option><option value="hi">Hindi</option>
+								<option value="hu">Hungarian</option><option value="is">Icelandic</option>
+								<option value="id">Indonesian</option><option value="it">Italian (Standard)</option>
+								<option value="it-CH">Italian (Switzerland)</option><option value="ja">Japanese</option>
+								<option value="ko">Korean</option><option value="ko">Korean (Johab)</option>
+								<option value="lv">Latvian</option><option value="lt">Lithuanian</option>
+								<option value="mk">Macedonian (FYROM)</option><option value="ms">Malaysian</option>
+								<option value="mt">Maltese</option><option value="no">Norwegian (Bokmal)</option>
+								<option value="no">Norwegian (Nynorsk)</option><option value="pl">Polish</option>
+								<option value="pt-BR">Portuguese (Brazil)</option><option value="pt">Portuguese (Portugal)</option>
+								<option value="rm">Rhaeto-Romanic</option><option value="ro">Romanian</option>
+								<option value="ro-MO">Romanian (Republic of Moldova)</option><option value="ru">Russian</option>
+								<option value="ru-MO">Russian (Republic of Moldova)</option><option value="sz">Sami (Lappish)</option>
+								<option value="sr">Serbian (Cyrillic)</option><option value="sr">Serbian (Latin)</option>
+								<option value="sk">Slovak</option><option value="sl">Slovenian</option>
+								<option value="sb">Sorbian</option><option value="es">Spanish (Spain)</option>
+								<option value="es-MX">Spanish (Mexico)</option><option value="es-GT">Spanish (Guatemala)</option>
+								<option value="es-CR">Spanish (Costa Rica)</option><option value="es-PA">Spanish (Panama)</option>
+								<option value="es-DO">Spanish (Dominican Republic)</option><option value="es-VE">Spanish (Venezuela)</option>
+								<option value="es-CO">Spanish (Colombia)</option><option value="es-PE">Spanish (Peru)</option>
+								<option value="es-AR">Spanish (Argentina)</option><option value="es-EC">Spanish (Ecuador)</option>
+								<option value="es-CL">Spanish (Chile)</option><option value="es-UY">Spanish (Uruguay)</option>
+								<option value="es-PY">Spanish (Paraguay)</option><option value="es-BO">Spanish (Bolivia)</option>
+								<option value="es-SV">Spanish (El Salvador)</option><option value="es-HN">Spanish (Honduras)</option>
+								<option value="es-NI">Spanish (Nicaragua)</option><option value="es-PR">Spanish (Puerto Rico)</option>
+								<option value="sx">Sutu</option><option value="sv">Swedish</option>
+								<option value="sv-FI">Swedish (Finland)</option><option value="th">Thai</option>
+								<option value="ts">Tsonga</option><option value="tn">Tswana</option>
+								<option value="tr">Turkish</option><option value="uk">Ukrainian</option>
+								<option value="ur">Urdu</option><option value="ve">Venda</option>
+								<option value="vi">Vietnamese</option><option value="xh">Xhosa</option>
+								<option value="ji">Yiddish</option><option value="zu">Zulu</option>
+							</select>
+						</div><!-- /.col -->
+					</div>
+				</div><!-- /form-group -->
+
+				<div class="form-group" ng-class="{ 'has-error' : uploadForm.privacidade.$invalid && !uploadForm.privacidade.$pristine }">
+					<div class="row">
+						<label class="col-lg-4 control-label">Privacidade</label>
+						<div class="col-lg-10">
+							<select class="form-control" ng-model="video.privacidade">
+								<option>Public</option>
+								<option>Private</option>
+							</select>
+						</div><!-- /.col -->
+					</div>
+				</div><!-- /form-group -->
+
+				<div class="form-group" ng-class="{ 'has-error' : uploadForm.categoria.$invalid && !uploadForm.categoria.$pristine }">
+                    <div class="row">
+                        <label class="col-lg-2 control-label">Categoria</label>
+                        <div class="col-lg-10">
+							<select name="categoria" class="form-control" ng-model="item.categoria" ng-init="item.categoria"
+									ng-options="for item in categorias | orderBy:'id'"></select>
+                        </div><!-- /.col -->
+                    </div>
+                </div><!-- /form-group -->
+
+				<!-- div class="form-group">
+					<label class="control-label">Adicionar a playlist</label>
+					<select multiple class="form-control chzn-select">
+						<option>Playlist 1</option>
+						<option>Playlist 2</option>
+						<option>Playlist 3</option>										
+					</select>
+				</div--><!-- /form-group -->
+
+				<div class="text-center font-lg">
+					<h4 class="text-left"><i class="fa fa-picture-o fa-lg"></i>Thumbnail</h4>
+				</div>
+
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						Definir miniatura do vídeo
+					</div>
+					<div class="panel-body">
+						<fieldset class="form-horizontal form-border">
+							<div class="form-group">
+								<div class="col-lg-10">
+									<div ng-controller="uploadCtrl">
+										<div id="dropzone2" class="dropzone" options="dzOptions2" callbacks="dzCallbacks2" ng-dropzone></div>
+									</div>
+								</div><!-- /.col -->
+							</div><!-- /form-group -->
+						</fieldset>
+					</div>
+				</div><!-- /panel -->
+
+                <div class="seperator"></div>
+
+                <div class="form-group text-center">
+                    <div class="col-lg-12">
+                        <button class="btn btn-success btn-sm" ng-click="publicar(video)" ng-disabled="uploadForm.$invalid">Salvar</button>
+                        <a href="#/dashboard" class="btn btn-default">Cancelar</a>
+                    </div><!-- /.col -->
+                </div><!-- /form-group -->
+			</form>		
+		</div>
+	</div><!-- /.padding-md -->
+</div><!-- /main-container -->

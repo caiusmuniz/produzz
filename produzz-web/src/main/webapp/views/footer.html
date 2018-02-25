@@ -1,0 +1,100 @@
+<!-- 
+<footer class="hide" ng-class="{ 'show' : loggedIn }">
+	<div class="row">
+		<div class="col-sm-6">
+			<span class="footer-brand">
+				<strong class="text-danger">Produzz</strong> Plataforma
+			</span>
+			<p class="no-margin">
+                &copy; 2017 <strong>Produzz Plataforma</strong>. ALL Rights Reserved.
+            </p>
+		</div>
+	</div>
+</footer>
+ -->
+
+<footer class="hide" ng-show="loggedIn" ng-class="{ 'show' : loggedIn }">
+	<div class="row">
+		<div class="col-sm-3 padding-md">
+			<p class="block">About Our Company</p>
+			<p><small>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum auctor suscipit lobortis.</small></p>
+		</div><!-- /.col -->
+		<div class="col-sm-3 padding-md">
+			<p class="block">Useful Links</p>
+			<ul class="list-unstyled useful-link">
+				<li>
+					<a href="#">
+						<small><i class="fa fa-chevron-right"></i> Our Profile</small>
+					</a>
+				</li>
+				<li>
+					<a href="#">
+						<small><i class="fa fa-chevron-right"></i> New Products</small>
+					</a>
+				</li>
+				<li>
+					<a href="#">
+						<small><i class="fa fa-chevron-right"></i> Support Portal</small>
+					</a>
+				</li>
+			</ul>
+		</div><!-- /.col -->
+		<div class="col-sm-3 padding-md">
+			<p class="block">Stay Connect</p>
+			<a href="#" class="social-connect tooltip-test facebook-hover pull-left m-right-xs" data-toggle="tooltip" data-original-title="Facebook"><i class="fa fa-facebook"></i></a>
+			<a href="#" class="social-connect tooltip-test twitter-hover pull-left m-right-xs" data-toggle="tooltip" data-original-title="Twitter"><i class="fa fa-twitter"></i></a>
+			<a href="#" class="social-connect tooltip-test google-plus-hover pull-left m-right-xs" data-toggle="tooltip" data-original-title="Google Plus"><i class="fa fa-google-plus"></i></a>
+			<a href="#" class="social-connect tooltip-test rss-hover pull-left m-right-xs" data-toggle="tooltip" data-original-title="Rss feed"><i class="fa fa-rss"></i></a>
+			<a href="#" class="social-connect tooltip-test tumblr-hover pull-left m-right-xs" data-toggle="tooltip" data-original-title="Tumblr"><i class="fa fa-tumblr"></i></a>
+			<a href="#" class="social-connect tooltip-test dribbble-hover pull-left m-right-xs" data-toggle="tooltip" data-original-title="Dribbble"><i class="fa fa-dribbble"></i></a>
+			<a href="#" class="social-connect tooltip-test linkedin-hover pull-left m-right-xs" data-toggle="tooltip" data-original-title="Linkedin"><i class="fa fa-linkedin"></i></a>
+			<a href="#" class="social-connect tooltip-test pinterest-hover pull-left" data-toggle="tooltip" data-original-title="Pinterest"><i class="fa fa-pinterest"></i></a>
+		</div><!-- /.col -->
+		<div class="col-sm-3 padding-md">
+			<p class="block">Contact Us</p>
+			Email : endless.themes@gmail.com
+			<div class="seperator"></div>
+			<a class="btn btn-sm btn-info"><i class="fa fa-envelope"></i> Contact support</a>
+		</div><!-- /.col -->
+	</div><!-- /.row -->
+</footer>
+
+<a href="" id="scroll-to-top" class="hidden-print" ng-click="scrollTo()"><i class="fa fa-chevron-up"></i></a>
+
+<!-- Logout confirmation -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content" style="color: #fff; background-color: #000;">
+      <div class="modal-body">
+        <div class="custom-popup width-100">
+            <div class="padding-md">
+                <h4 class="m-top-none"> Sair da Produzz?</h4>
+            </div>
+        </div>
+        <div class="text-center">
+            <a class="btn btn-success" ng-click="logout()">Sair</a>
+            <a class="btn btn-danger" ng-click="toggleModal()">Cancelar</a>
+        </div>
+      </div><!-- /modal-body -->
+    </div><!-- /modal-content -->
+  </div><!-- /modal-dialog -->
+</div><!-- /modal -->
+
+<!-- Excluir confirmation -->
+<div class="modal fade" id="excluirModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content" style="color: #fff; background-color: #000;">
+      <div class="modal-body">
+        <div class="custom-popup width-100">
+            <div class="padding-md">
+                <h4 class="m-top-none"> Confirma exclusao da conta?</h4>
+            </div>
+        </div>
+        <div class="text-center">
+            <a class="btn btn-success" ng-click="excluir()">Confirmar</a>
+            <a class="btn btn-danger" ng-click="toggleExcModal()">Cancelar</a>
+        </div>
+      </div><!-- /modal-body -->
+    </div><!-- /modal-content -->
+  </div><!-- /modal-dialog -->
+</div><!-- /modal -->

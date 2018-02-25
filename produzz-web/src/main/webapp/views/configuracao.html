@@ -1,0 +1,175 @@
+<div id="main-container" ng-controller="ConfiguracaoCtrl">
+    <div id="breadcrumb">
+        <ul class="breadcrumb">
+             <li><i class="fa fa-home"></i><a href="dashboard.html"> Home</a></li>
+             <li class="active"> Integração</li>
+        </ul>
+    </div><!-- breadcrumb -->
+
+    <!-- Criar novo -->
+    <div class="padding-md">
+        <div class="row padding-md ">
+            <div class="col-md-12">
+                <div class="page-title">
+                    <h3 class="no-margin">Integração</h3>
+                    <span>Configure os parâmetros de integração com suas plataformas de e-commerce.</span>
+                </div><!-- /page-title -->
+            </div>
+        </div>
+
+        <div class="row padding-md ">
+            <div class="panel-group" id="accordion">
+                <form id="form_contacanal" name="form_contacanal" role="form_contacanal" class="form-horizontal no-margin form-border" data-validate="parsley" novalidate>
+                    <input id="idConta" name="idConta" type="hidden" value=""><!-- INFORMACAO DE IDENTIFICACAO UNICA DA CONTA -->
+                    <input id="id" name="id" type="hidden" value=""><!-- INFORMACAO DE IDENTIFICACAO UNICA DO CONTATO -->
+
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                            <img src="img/icone_vtex.png">
+                                        </div>
+                                        <div class="col-md-10">
+                                            <div class="col-md-10">
+                                                <h4 class="no-margin">Plataforma Vtex<h4>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <div class="hidden" id="vtex_conectado">
+                                                    <i class="fa fa-check-circle-o fa-lg"></i>
+                                                    Conectado
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapseOne" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                    <div class="col-md-12">
+                                        <div class="col-lg-2">
+                                        </div>
+                                        <div class="col-lg-10">
+                                            Não sabe seus parâmetros de integração. 
+                                            <b><a href="http://vtex.com.br/help/dados-para-integracao-erp/" target="_blank">Veja aqui como conseguir.</a></b>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 padding-md">
+                                        <div class="form-group">
+                                            <label class="col-lg-2 control-label">URL do site</label>
+                                            <div class="col-lg-10">
+                                                <input id="vtexUrl" name="vtexURL" class="form-control input-sm" data-required="true" type="text" autocomplete="off" placeholder="http:\\www.meusite.com.br">
+                                                <span class="help-block">Endereço da sua loja virtual na VTEX.</span>
+                                            </div><!-- /.col -->
+                                        </div><!-- /form-group -->
+
+                                        <div class="form-group">
+                                            <label class="col-lg-2 control-label">Web Store</label>
+                                            <div class="col-lg-10">
+                                                <input id="vtexUsuario" name="vtexUsuario" class="form-control input-sm" data-required="true" type="text" autocomplete="off" placeholder="Insira o seu web store aqui...">
+                                                <span class="help-block">Nome da sua loja virtual na VTEX.</span>
+                                            </div><!-- /.col -->
+                                        </div><!-- /form-group -->
+
+                                        <div class="form-group">
+                                            <label class="col-lg-2 control-label">App Key</label>
+                                            <div class="col-lg-10">
+                                                <input id="vtexSenha" name="vtexSenha" class="form-control input-sm" data-required="true" type="text" autocomplete="off" placeholder="Insira o seu app key aqui...">
+                                                <span class="help-block">Chave de segurança usada para acessar os dados da sua loja virtual na VTEX.</span>
+                                            </div><!-- /.col -->
+                                        </div><!-- /form-group -->
+
+                                        <div class="form-group">
+                                            <label class="col-lg-2 control-label">App Token</label>
+                                            <div class="col-lg-10">
+                                                <input id="vtexToken" name="vtexToken" class="form-control input-sm" data-required="true" type="text" autocomplete="off" placeholder="Insira o seu app token aqui...">
+                                                <span class="help-block">É a senha, criptografada, usada para acessar os dados da sua loja virtual na VTEX.</span>
+                                            </div><!-- /.col -->
+                                        </div><!-- /form-group -->
+
+                                        <div class="form-group text-center">
+                                            <div class="col-lg-12">
+                                                <button type="submit" class="btn btn-success" id="btn_vtex_teste">Salvar</button>
+                                                <button type="reset" class="btn btn-default"><a href="dashboard.html">Cancelar</a></button>
+                                            </div><!-- /.col -->
+                                        </div><!-- /form-group -->
+                                    </div>
+                            </div>
+                        </div>
+                    </div><!-- /panel -->
+                    <div class="panel panel-default hide">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                            <img src="img/icone_jet.png">
+                                        </div>
+                                        <div class="col-md-10">
+                                            <div class="col-md-12">
+                                                <h4 class="no-margin">Jet<h4>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapseTwo" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                            </div>
+                        </div>
+                    </div><!-- /panel -->
+                    <div class="panel panel-default hide">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                            <img src="img/icone_ezcommerce.png">
+                                        </div>
+                                        <div class="col-md-10">
+                                            <div class="col-md-12">
+                                                <h4 class="no-margin">EzCommerce<h4>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapseThree" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                            </div>
+                        </div>
+                    </div><!-- /panel -->
+                    <div class="panel panel-default hide">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseFour">
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                            <img src="img/icone_bseller.png">
+                                        </div>
+                                        <div class="col-md-10">
+                                            <div class="col-md-12">
+                                                <h4 class="no-margin">BSeller<h4>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapseFour" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                            </div>
+                        </div>
+                    </div><!-- /panel -->
+                </form>
+            </div><!-- /panel-group -->
+        </div>
+    </div>
+</div>

@@ -1,0 +1,497 @@
+<div id="main-container">
+	<div id="breadcrumb">
+		<ul class="breadcrumb">
+			 <li><i class="fa fa-home"></i><a href=""> Home</a></li>
+			 <li class="active">Plataformas</li>
+		</ul>
+	</div><!-- /breadcrumb-->
+
+	<div class="main-header clearfix">
+		<div class="page-title">
+			<h3 class="no-margin">PLATAFORMAS</h3>
+		</div><!-- /page-title -->
+	</div><!-- /main-header -->
+
+	<div class="padding-md">
+		<div class="container">
+            <div ng-include="'views/alertMessage.html'"></div>
+
+			<form name="usuarioForm" class="form-horizontal no-margin form-border" novalidate>
+				<div class="panel-tab clearfix">
+					<ul class="tab-bar">
+						<li class="active"><a data-toggle="tab"> Plataformas de videos</a></li>
+						<li><a data-toggle="tab"> Plataformas sociais</a></li>
+					</ul>
+				</div>
+
+				<div class="panel-body">
+					<div class="tab-content">
+						<div class="tab-pane fade in active" id="video">
+							<div class="row">
+								<div class="col-sm-4 content-padding col-md-5" ng-show="loggedGoogle" ng-class="{ 'show' : loggedGoogle }">
+									<div class="row">
+										<div class="col-md-4">
+											<div class="feature-icon text-center">
+												<img src="img/ico_youtube_100x100.png" alt="YouTube"/>
+											</div>
+											<div class="text-center font-lg">
+												<h4>YouTube</h4>
+											</div>
+										</div>
+										<div class="col-md-8">
+											<div class="form-group">
+												<label class="col-lg control-label"><i class="fa fa-envelope fa-lg"></i> {{googleUser.email}}</label>
+											</div>
+											<div class="form-group">
+												<label class="col-lg control-label"><i class="fa fa-user fa-lg"></i> {{googleUser.nome}}</label>
+											</div>
+											<div class="form-group">
+												<label class="col-lg control-label"><i class="fa fa-film fa-lg"></i> 0</label>
+											</div>
+										</div>
+									</div>
+
+									<div class="seperator"></div>
+
+									<div class="row">
+										<div class="col-md-6">
+											<div class="form-group">
+												<label class="col-lg-4 control-label">Idioma</label>
+												<div class="col-lg-10">
+													<select class="form-control" ng-model="googleUser.locale">
+														<option value="af">Afrikaans</option><option value="sq">Albanian</option>
+														<option value="ar-SA">Arabic (Saudi Arabia)</option><option value="ar-IQ">Arabic (Iraq)</option>
+														<option value="ar-EG">Arabic (Egypt)</option><option value="ar-LY">Arabic (Libya)</option>
+														<option value="ar-DZ">Arabic (Algeria)</option><option value="ar-MA">Arabic (Morocco)</option>
+														<option value="ar-TN">Arabic (Tunisia)</option><option value="ar-OM">Arabic (Oman)</option>
+														<option value="ar-YE">Arabic (Yemen)</option><option value="	ar-SY">Arabic (Syria)</option>
+														<option value="ar-JO">Arabic (Jordan)</option><option value="ar-LB">Arabic (Lebanon)</option>
+														<option value="ar-KW">Arabic (Kuwait)</option><option value="ar-AE">Arabic (U.A.E.)</option>
+														<option value="ar-BH">Arabic (Bahrain)</option><option value="ar-QA">Arabic (Qatar)</option>
+														<option value="eu">Basque (Basque)</option><option value="bg">Bulgarian</option>
+														<option value="be">Belarusian</option><option value="ca">Catalan</option>
+														<option value="zh-TW">Chinese (Taiwan)</option><option value="zh-CN">Chinese (PRC)</option>
+														<option value="zh-HK">Chinese (Hong Kong SAR)</option><option value="zh-SG">Chinese (Singapore)</option>
+														<option value="hr">Croatian</option><option value="cs">Czech</option>
+														<option value="da">Danish</option><option value="nl">Dutch (Standard)</option>
+														<option value="nl-BE">Dutch (Belgium)</option><option value="en">English</option>
+														<option value="en-US">English (United States)</option><option value="en-GB">English (United Kingdom)</option>
+														<option value="en-AU">English (Australia)</option><option value="en-CA">English (Canada)</option>
+														<option value="en-NZ">English (New Zealand)</option><option value="en-IE">English (Ireland)</option>
+														<option value="en-ZA">English (South Africa)</option><option value="en-JM">English (Jamaica)</option>
+														<option value="en">English (Caribbean)</option><option value="en-BZ">English (Belize)</option>
+														<option value="en-TT">English (Trinidad)</option><option value="et">Estonian</option>
+														<option value="fo">Faeroese</option><option value="fa">Farsi</option>
+														<option value="fi">Finnish</option><option value="fr">French (Standard)</option>
+														<option value="fr-BE">French (Belgium)</option><option value="fr-CA">French (Canada)</option>
+														<option value="fr-CH">French (Switzerland)</option><option value="fr-LU">French (Luxembourg)</option>
+														<option value="gd">Gaelic (Scotland)</option><option value="ga">Irish</option>
+														<option value="de">German (Standard)</option><option value="de-CH">German (Switzerland)</option>
+														<option value="de-AT">German (Austria)</option><option value="de-LU">German (Luxembourg)</option>
+														<option value="de-LI">German (Liechtenstein)</option><option value="el">Greek</option>
+														<option value="he">Hebrew</option><option value="hi">Hindi</option>
+														<option value="hu">Hungarian</option><option value="is">Icelandic</option>
+														<option value="id">Indonesian</option><option value="it">Italian (Standard)</option>
+														<option value="it-CH">Italian (Switzerland)</option><option value="ja">Japanese</option>
+														<option value="ko">Korean</option><option value="ko">Korean (Johab)</option>
+														<option value="lv">Latvian</option><option value="lt">Lithuanian</option>
+														<option value="mk">Macedonian (FYROM)</option><option value="ms">Malaysian</option>
+														<option value="mt">Maltese</option><option value="no">Norwegian (Bokmal)</option>
+														<option value="no">Norwegian (Nynorsk)</option><option value="pl">Polish</option>
+														<option value="pt-BR">Portuguese (Brazil)</option><option value="pt">Portuguese (Portugal)</option>
+														<option value="rm">Rhaeto-Romanic</option><option value="ro">Romanian</option>
+														<option value="ro-MO">Romanian (Republic of Moldova)</option><option value="ru">Russian</option>
+														<option value="ru-MO">Russian (Republic of Moldova)</option><option value="sz">Sami (Lappish)</option>
+														<option value="sr">Serbian (Cyrillic)</option><option value="sr">Serbian (Latin)</option>
+														<option value="sk">Slovak</option><option value="sl">Slovenian</option>
+														<option value="sb">Sorbian</option><option value="es">Spanish (Spain)</option>
+														<option value="es-MX">Spanish (Mexico)</option><option value="es-GT">Spanish (Guatemala)</option>
+														<option value="es-CR">Spanish (Costa Rica)</option><option value="es-PA">Spanish (Panama)</option>
+														<option value="es-DO">Spanish (Dominican Republic)</option><option value="es-VE">Spanish (Venezuela)</option>
+														<option value="es-CO">Spanish (Colombia)</option><option value="es-PE">Spanish (Peru)</option>
+														<option value="es-AR">Spanish (Argentina)</option><option value="es-EC">Spanish (Ecuador)</option>
+														<option value="es-CL">Spanish (Chile)</option><option value="es-UY">Spanish (Uruguay)</option>
+														<option value="es-PY">Spanish (Paraguay)</option><option value="es-BO">Spanish (Bolivia)</option>
+														<option value="es-SV">Spanish (El Salvador)</option><option value="es-HN">Spanish (Honduras)</option>
+														<option value="es-NI">Spanish (Nicaragua)</option><option value="es-PR">Spanish (Puerto Rico)</option>
+														<option value="sx">Sutu</option><option value="sv">Swedish</option>
+														<option value="sv-FI">Swedish (Finland)</option><option value="th">Thai</option>
+														<option value="ts">Tsonga</option><option value="tn">Tswana</option>
+														<option value="tr">Turkish</option><option value="uk">Ukrainian</option>
+														<option value="ur">Urdu</option><option value="ve">Venda</option>
+														<option value="vi">Vietnamese</option><option value="xh">Xhosa</option>
+														<option value="ji">Yiddish</option><option value="zu">Zulu</option>
+													</select>
+												</div><!-- /.col -->
+											</div><!-- /form-group -->
+										</div>
+										<div class="col-md-6">
+											<div class="form-group">
+												<label class="col-lg-4 control-label">Privacidade</label>
+												<div class="col-lg-10">
+													<select class="form-control" ng-model="googleUser.privacidade">
+														<option>Public</option>
+														<option>Private</option>
+													</select>
+												</div><!-- /.col -->
+											</div><!-- /form-group -->
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-md-6">
+											<div class="form-group">
+												<label class="col-lg-4 control-label">Categoria</label>
+												<div class="col-lg-10">
+													<select class="form-control" ng-model="googleUser.categoria">
+														<option>Public</option>
+														<option>Private</option>
+													</select>
+												</div><!-- /.col -->
+											</div><!-- /form-group -->
+										</div>
+										<div class="col-md-6">
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-md">
+											<div class="form-group">
+												<label class="col-lg-4 control-label">Geo Restri&ccedil;&atilde;o</label>
+												<div class="col-lg-10">
+													<select multiple class="form-control chzn-select" ng-model="googleUser.restricao">
+														<option>Afghanistan</option><option>Åland Islands</option>
+														<option>Albania</option><option>Algeria</option>
+														<option>American Samoa</option><option>Andorra</option>
+														<option>Angola</option><option>Anguilla</option>
+														<option>Antarctica</option><option>Antigua and Barbuda</option>
+														<option>Argentina</option><option>Armenia</option>
+														<option>Aruba</option><option>Australia</option>
+														<option>Austria</option><option>Azerbaijan</option>
+														<option>Bahamas</option><option>Bahrain</option>
+														<option>Bangladesh</option><option>Barbados</option>
+														<option>Belarus</option><option>Belgium</option>
+														<option>Belize</option><option>Benin</option>
+														<option>Bermuda</option><option>Bhutan</option>
+														<option>Bolivia</option><option>Bonaire, Sint Eustatius and Saba</option>
+														<option>Bosnia and Herzegovina</option><option>Botswana</option>
+														<option>Bouvet Island</option><option>Brazil</option>
+														<option>British Indian Ocean Territory</option><option>Brunei</option>
+														<option>Bulgaria</option><option>Burkina Faso</option>
+														<option>Burundi</option><option>Cabo Verde</option>
+														<option>Cambodia</option><option>Cameroon</option>
+														<option>Canada</option><option>Cayman Islands</option>
+														<option>Central African Republic</option><option>Chad</option>
+														<option>Chile</option><option>China</option>
+														<option>Christmas Island</option><option>Cocos (Keeling) Islands</option>
+														<option>Colombia</option><option>Comoros</option>
+														<option>Congo</option><option>Congo (the Democratic Republic of the)</option>
+														<option>Cook Islands</option><option>Costa Rica</option>
+														<option>Côte d'Ivoire</option><option>Croatia</option>
+														<option>Cuba</option><option>Curaçao</option>
+														<option>Cyprus</option><option>Czech Republic</option>
+														<option>Denmark</option><option>Djibouti</option>
+														<option>Dominica</option><option>Dominican Republic</option>
+														<option>Ecuador</option><option>Egypt</option>
+														<option>El Salvador</option><option>Equatorial Guinea</option>
+														<option>Eritrea</option><option>Estonia</option>
+														<option>Ethiopia</option><option>Falkland Islands [Malvinas]</option>
+														<option>Faroe Islands</option><option>Fiji</option>
+														<option>Finland</option><option>France</option>
+														<option>French Guiana</option><option>French Polynesia</option>
+														<option>French Southern Territories</option><option>Gabon</option>
+														<option>Gambia</option><option>Georgia</option>
+														<option>Germany</option><option>Ghana</option>
+														<option>Gibraltar</option><option>Greece</option>
+														<option>Greenland</option><option>Grenada</option>
+														<option>Guadeloupe</option><option>Guam</option>
+														<option>Guatemala</option><option>Guernsey</option>
+														<option>Guinea</option><option>Guinea-Bissau</option>
+														<option>Guyana</option><option>Haiti</option>
+														<option>Heard Island and McDonald Islands</option><option>Holy See</option>
+														<option>Honduras</option><option>Hong Kong</option>
+														<option>Hungary</option>
+													</select>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-md-6">
+											<div class="form-group">
+												<label class="col-lg-10 label-checkbox inline">
+													<input type="checkbox"><span class="custom-checkbox"></span> Auto Select
+												</label>
+											</div>
+										</div>
+									</div>
+
+									<div class="seperator"></div>
+
+									<div class="row">
+										<div class="col-md-6">
+											<div class="form-group">
+												<a href="https://www.youtube.com/analytics?o=U" target="_blank" class="primary-font">Link para o Youtube</a>
+											</div><!-- /form-group -->
+										</div>
+										<div class="col-md-6">
+											<div class="text-center font-lg">
+												<button class="btn btn-sm btn-danger" type="button" onclick="desconectarYoutube();">Desconectar</button>
+											</div>
+										</div>
+									</div>
+								</div><!-- /.col -->
+									
+								<div class="col-sm-4 content-padding col-md-5" ng-show="notLoggedGoogle" ng-class="{ 'show' : notLoggedGoogle }">
+									<div class="feature-icon text-center">
+										<img src="img/ico_youtube_100x100.png" alt="YouTube"/>
+									</div>
+									<div class="text-center font-lg">
+										<h4>YouTube</h4>
+									</div>
+									<p>YouTube is a video-sharing website headquartered in San Bruno, California, United States. The service was created by three former PayPal 
+									employees in February 2005. In November 2006, it was bought by Google for US$1.65 billion.</p>
+									<p>Launched in May 2005, YouTube allows billions of people to discover, watch and share originally-created videos. YouTube provides a forum for 
+									people to connect, inform, and inspire others across the globe and acts as a distribution platform for original content creators and advertisers 
+									large and small.</p>
+									<div class="text-center font-lg">
+										<button class="btn btn-sm btn-info" type="button" onclick="conectarYoutube();">Conectar</button>
+									</div>
+								</div><!-- /.col -->
+			
+								<div class="col-sm-4 content-padding col-md-5" ng-show="loggedFacebook" ng-class="{ 'show' : loggedFacebook }">
+									<div class="row">
+										<div class="col-md-4">
+									<div class="feature-icon text-center">
+										<img src="img/ico_facebook_100x100.png" alt="Facebook"/>
+									</div>
+									<div class="text-center font-lg">
+										<h4>Facebook</h4>
+									</div>
+										</div>
+										<div class="col-md-8">
+											<div class="form-group">
+												<label class="col-lg control-label"><i class="fa fa-envelope fa-lg"></i> {{facebookUser.email}}</label>
+											</div>
+											<div class="form-group">
+												<label class="col-lg control-label"><i class="fa fa-user fa-lg"></i> {{facebookUser.nome}}</label>
+											</div>
+											<div class="form-group">
+												<label class="col-lg control-label"><i class="fa fa-film fa-lg"></i> 0</label>
+											</div>
+										</div>
+									</div>
+
+									<div class="seperator"></div>
+
+									<div class="row">
+										<div class="col-md-6">
+											<div class="form-group">
+												<label class="col-lg-4 control-label">Idioma</label>
+												<div class="col-lg-10">
+													<select class="form-control" ng-model="googleUser.locale">
+														<option value="af">Afrikaans</option><option value="sq">Albanian</option>
+														<option value="ar-SA">Arabic (Saudi Arabia)</option><option value="ar-IQ">Arabic (Iraq)</option>
+														<option value="ar-EG">Arabic (Egypt)</option><option value="ar-LY">Arabic (Libya)</option>
+														<option value="ar-DZ">Arabic (Algeria)</option><option value="ar-MA">Arabic (Morocco)</option>
+														<option value="ar-TN">Arabic (Tunisia)</option><option value="ar-OM">Arabic (Oman)</option>
+														<option value="ar-YE">Arabic (Yemen)</option><option value="	ar-SY">Arabic (Syria)</option>
+														<option value="ar-JO">Arabic (Jordan)</option><option value="ar-LB">Arabic (Lebanon)</option>
+														<option value="ar-KW">Arabic (Kuwait)</option><option value="ar-AE">Arabic (U.A.E.)</option>
+														<option value="ar-BH">Arabic (Bahrain)</option><option value="ar-QA">Arabic (Qatar)</option>
+														<option value="eu">Basque (Basque)</option><option value="bg">Bulgarian</option>
+														<option value="be">Belarusian</option><option value="ca">Catalan</option>
+														<option value="zh-TW">Chinese (Taiwan)</option><option value="zh-CN">Chinese (PRC)</option>
+														<option value="zh-HK">Chinese (Hong Kong SAR)</option><option value="zh-SG">Chinese (Singapore)</option>
+														<option value="hr">Croatian</option><option value="cs">Czech</option>
+														<option value="da">Danish</option><option value="nl">Dutch (Standard)</option>
+														<option value="nl-BE">Dutch (Belgium)</option><option value="en">English</option>
+														<option value="en-US">English (United States)</option><option value="en-GB">English (United Kingdom)</option>
+														<option value="en-AU">English (Australia)</option><option value="en-CA">English (Canada)</option>
+														<option value="en-NZ">English (New Zealand)</option><option value="en-IE">English (Ireland)</option>
+														<option value="en-ZA">English (South Africa)</option><option value="en-JM">English (Jamaica)</option>
+														<option value="en">English (Caribbean)</option><option value="en-BZ">English (Belize)</option>
+														<option value="en-TT">English (Trinidad)</option><option value="et">Estonian</option>
+														<option value="fo">Faeroese</option><option value="fa">Farsi</option>
+														<option value="fi">Finnish</option><option value="fr">French (Standard)</option>
+														<option value="fr-BE">French (Belgium)</option><option value="fr-CA">French (Canada)</option>
+														<option value="fr-CH">French (Switzerland)</option><option value="fr-LU">French (Luxembourg)</option>
+														<option value="gd">Gaelic (Scotland)</option><option value="ga">Irish</option>
+														<option value="de">German (Standard)</option><option value="de-CH">German (Switzerland)</option>
+														<option value="de-AT">German (Austria)</option><option value="de-LU">German (Luxembourg)</option>
+														<option value="de-LI">German (Liechtenstein)</option><option value="el">Greek</option>
+														<option value="he">Hebrew</option><option value="hi">Hindi</option>
+														<option value="hu">Hungarian</option><option value="is">Icelandic</option>
+														<option value="id">Indonesian</option><option value="it">Italian (Standard)</option>
+														<option value="it-CH">Italian (Switzerland)</option><option value="ja">Japanese</option>
+														<option value="ko">Korean</option><option value="ko">Korean (Johab)</option>
+														<option value="lv">Latvian</option><option value="lt">Lithuanian</option>
+														<option value="mk">Macedonian (FYROM)</option><option value="ms">Malaysian</option>
+														<option value="mt">Maltese</option><option value="no">Norwegian (Bokmal)</option>
+														<option value="no">Norwegian (Nynorsk)</option><option value="pl">Polish</option>
+														<option value="pt-BR">Portuguese (Brazil)</option><option value="pt">Portuguese (Portugal)</option>
+														<option value="rm">Rhaeto-Romanic</option><option value="ro">Romanian</option>
+														<option value="ro-MO">Romanian (Republic of Moldova)</option><option value="ru">Russian</option>
+														<option value="ru-MO">Russian (Republic of Moldova)</option><option value="sz">Sami (Lappish)</option>
+														<option value="sr">Serbian (Cyrillic)</option><option value="sr">Serbian (Latin)</option>
+														<option value="sk">Slovak</option><option value="sl">Slovenian</option>
+														<option value="sb">Sorbian</option><option value="es">Spanish (Spain)</option>
+														<option value="es-MX">Spanish (Mexico)</option><option value="es-GT">Spanish (Guatemala)</option>
+														<option value="es-CR">Spanish (Costa Rica)</option><option value="es-PA">Spanish (Panama)</option>
+														<option value="es-DO">Spanish (Dominican Republic)</option><option value="es-VE">Spanish (Venezuela)</option>
+														<option value="es-CO">Spanish (Colombia)</option><option value="es-PE">Spanish (Peru)</option>
+														<option value="es-AR">Spanish (Argentina)</option><option value="es-EC">Spanish (Ecuador)</option>
+														<option value="es-CL">Spanish (Chile)</option><option value="es-UY">Spanish (Uruguay)</option>
+														<option value="es-PY">Spanish (Paraguay)</option><option value="es-BO">Spanish (Bolivia)</option>
+														<option value="es-SV">Spanish (El Salvador)</option><option value="es-HN">Spanish (Honduras)</option>
+														<option value="es-NI">Spanish (Nicaragua)</option><option value="es-PR">Spanish (Puerto Rico)</option>
+														<option value="sx">Sutu</option><option value="sv">Swedish</option>
+														<option value="sv-FI">Swedish (Finland)</option><option value="th">Thai</option>
+														<option value="ts">Tsonga</option><option value="tn">Tswana</option>
+														<option value="tr">Turkish</option><option value="uk">Ukrainian</option>
+														<option value="ur">Urdu</option><option value="ve">Venda</option>
+														<option value="vi">Vietnamese</option><option value="xh">Xhosa</option>
+														<option value="ji">Yiddish</option><option value="zu">Zulu</option>
+													</select>
+												</div><!-- /.col -->
+											</div><!-- /form-group -->
+										</div>
+										<div class="col-md-6">
+											<div class="form-group">
+												<label class="col-lg-4 control-label">Privacidade</label>
+												<div class="col-lg-10">
+													<select class="form-control">
+														<option>Public</option>
+														<option>Private</option>
+													</select>
+												</div><!-- /.col -->
+											</div><!-- /form-group -->
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-md-6">
+											<div class="form-group">
+												<label class="col-lg-4 control-label">Categoria</label>
+												<div class="col-lg-10">
+													<select class="form-control">
+														<option>Public</option>
+														<option>Private</option>
+													</select>
+												</div><!-- /.col -->
+											</div><!-- /form-group -->
+										</div>
+										<div class="col-md-6">
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-md">
+											<div class="form-group">
+												<label class="col-lg-4 control-label">Geo Restri&ccedil;&atilde;o</label>
+												<div class="col-lg-10">
+													<select multiple class="form-control chzn-select">
+														<option>Afghanistan</option><option>Åland Islands</option>
+														<option>Albania</option><option>Algeria</option>
+														<option>American Samoa</option><option>Andorra</option>
+														<option>Angola</option><option>Anguilla</option>
+														<option>Antarctica</option><option>Antigua and Barbuda</option>
+														<option>Argentina</option><option>Armenia</option>
+														<option>Aruba</option><option>Australia</option>
+														<option>Austria</option><option>Azerbaijan</option>
+														<option>Bahamas</option><option>Bahrain</option>
+														<option>Bangladesh</option><option>Barbados</option>
+														<option>Belarus</option><option>Belgium</option>
+														<option>Belize</option><option>Benin</option>
+														<option>Bermuda</option><option>Bhutan</option>
+														<option>Bolivia</option><option>Bonaire, Sint Eustatius and Saba</option>
+														<option>Bosnia and Herzegovina</option><option>Botswana</option>
+														<option>Bouvet Island</option><option>Brazil</option>
+														<option>British Indian Ocean Territory</option><option>Brunei</option>
+														<option>Bulgaria</option><option>Burkina Faso</option>
+														<option>Burundi</option><option>Cabo Verde</option>
+														<option>Cambodia</option><option>Cameroon</option>
+														<option>Canada</option><option>Cayman Islands</option>
+														<option>Central African Republic</option><option>Chad</option>
+														<option>Chile</option><option>China</option>
+														<option>Christmas Island</option><option>Cocos (Keeling) Islands</option>
+														<option>Colombia</option><option>Comoros</option>
+														<option>Congo</option><option>Congo (the Democratic Republic of the)</option>
+														<option>Cook Islands</option><option>Costa Rica</option>
+														<option>Côte d'Ivoire</option><option>Croatia</option>
+														<option>Cuba</option><option>Curaçao</option>
+														<option>Cyprus</option><option>Czech Republic</option>
+														<option>Denmark</option><option>Djibouti</option>
+														<option>Dominica</option><option>Dominican Republic</option>
+														<option>Ecuador</option><option>Egypt</option>
+														<option>El Salvador</option><option>Equatorial Guinea</option>
+														<option>Eritrea</option><option>Estonia</option>
+														<option>Ethiopia</option><option>Falkland Islands [Malvinas]</option>
+														<option>Faroe Islands</option><option>Fiji</option>
+														<option>Finland</option><option>France</option>
+														<option>French Guiana</option><option>French Polynesia</option>
+														<option>French Southern Territories</option><option>Gabon</option>
+														<option>Gambia</option><option>Georgia</option>
+														<option>Germany</option><option>Ghana</option>
+														<option>Gibraltar</option><option>Greece</option>
+														<option>Greenland</option><option>Grenada</option>
+														<option>Guadeloupe</option><option>Guam</option>
+														<option>Guatemala</option><option>Guernsey</option>
+														<option>Guinea</option><option>Guinea-Bissau</option>
+														<option>Guyana</option><option>Haiti</option>
+														<option>Heard Island and McDonald Islands</option><option>Holy See</option>
+														<option>Honduras</option><option>Hong Kong</option>
+														<option>Hungary</option>
+													</select>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-md-6">
+											<div class="form-group">
+												<label class="col-lg-10 label-checkbox inline">
+													<input type="checkbox"><span class="custom-checkbox"></span> Auto Select
+												</label>
+											</div>
+										</div>
+									</div>
+									
+									<div class="seperator"></div>
+
+									<div class="row">
+										<div class="col-md-6">
+										</div>
+										<div class="col-md-6">
+											<div class="text-center font-lg">
+												<button class="btn btn-sm btn-danger" type="button" onclick="desconectarFacebook();">Desconectar</button>
+											</div>
+										</div>
+									</div>
+								</div><!-- /.col -->
+
+								<div class="col-sm-4 content-padding col-md-5" ng-show="notLoggedFacebook" ng-class="{ 'show' : notLoggedFacebook }">
+									<div class="feature-icon text-center">
+										<img src="img/ico_facebook_100x100.png" alt="Facebook"/>
+									</div>
+									<div class="text-center font-lg">
+										<h4>Facebook</h4>
+									</div>
+									<p>Facebook is a social networking website that makes it easy for you to connect and share with your family and friends online. 
+									Facebook is the world's largest social network, with more than 1 billion users worldwide.</p>
+									<p>People watch video on Facebook to connect with moments shared by their friends, catch up on news from the day, and much more. 
+									More than 65% of all views are happening on mobile devices as people turn to Facebook at different times and places throughout the day.</p>
+									<div class="text-center font-lg">
+										<button class="btn btn-sm btn-info" type="button" onclick="conectarFacebook();">Conectar</button>
+									</div>
+								</div><!-- /.col -->
+							</div><!-- /.row -->
+						</div>
+
+						<div class="tab-pane fade" id="social">
+							<p>Food truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid. Exercitation +1 labore velit, blog sartorial PBR leggings next level wes anderson artisan four loko farm-to-table craft beer twee. Qui photo booth letterpress, commodo enim craft beer mlkshk aliquip jean shorts ullamco ad vinyl cillum PBR. Homo nostrud organic, assumenda labore aesthetic magna delectus mollit. Keytar helvetica VHS salvia yr, vero magna velit sapiente labore stumptown. Vegan fanny pack odio cillum wes anderson 8-bit, sustainable jean shorts beard ut DIY ethical culpa terry richardson biodiesel. Art party scenester stumptown, tumblr butcher vero sint qui sapiente accusamus tattooed echo park.</p>
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+		<div class="row">
+		</div><!-- /.row -->
+	</div><!-- /.padding20 -->
+</div><!-- /main-container -->

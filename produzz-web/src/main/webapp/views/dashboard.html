@@ -1,0 +1,101 @@
+<div id="main-container">
+	<div id="breadcrumb">
+		<ul class="breadcrumb">
+			 <li><i class="fa fa-home"></i><a href=""> Home</a></li>
+			 <li class="active">Painel</li>
+		</ul>
+	</div><!-- /breadcrumb-->
+
+	<div class="main-header clearfix">
+		<div class="page-title">
+			<h3 class="no-margin">Painel</h3>
+			<span id="saudacao">Bem-vindo, {{contato.nome}} {{contato.sobrenome}}. Veja aqui seus resultados.</span>
+		</div><!-- /page-title -->
+		<ul class="page-stats">
+			<li>
+				<div class="value">
+					<span>Meus créditos</span>
+					<h4 id="meuCredito">{{plano.qtVideo}}</h4>
+				</div>
+			</li>
+			<li>
+				<div class="value">
+					<span>Meu plano</span>
+					<h4 id="meuPlano">{{plano.nome}}</h4>
+				</div>
+			</li>
+		</ul><!-- /page-stats -->
+	</div><!-- /main-header -->
+
+	<div class="padding-md">
+		<div class="col-md-12">
+			<h5>Resultado dos últimos 30 dias</h5>
+		</div>
+		<div class="row">
+			<div class="col-sm-6 col-md-3">
+				<div class="panel-stat3 bg-warning">
+					<h2 class="m-top-none" id="qtEnviada">{{ultimos30.qtEnviada}}</h2>
+					<h5>Enviadas</h5>
+                    <i class="fa fa-arrow-circle-o-up fa-lg"></i><span class="m-left-xs" id="pcEnviada">{{ultimos30.pcEnviada}}</span><span class="m-left-xs">% a mais que m&ecirc;s passado</span>
+					<div class="stat-icon">
+						<i class="fa fa-hdd-o fa-3x"></i>
+					</div>
+					<div class="refresh-button">
+						<i class="fa fa-refresh"></i>
+					</div>
+					<div class="loading-overlay">
+						<i class="loading-icon fa fa-refresh fa-spin fa-lg"></i>
+					</div>
+				</div>
+			</div><!-- /.col -->
+			<div class="col-sm-6 col-md-3">
+				<div class="panel-stat3 bg-success">
+					<h2 class="m-top-none"><span id="qtRecebido">{{ultimos30.qtEntregue}}</span></h2>
+					<h5>Entregues</h5>
+            <i class="fa fa-arrow-circle-o-up fa-lg"></i><span class="m-left-xs" id="pcRecebido">ultimos30.pcEntregue</span><span class="m-left-xs">% a mais que m&ecirc;s passado</span>
+					<div class="stat-icon">
+						<i class="fa fa-hdd-o fa-3x"></i>
+					</div>
+					<div class="refresh-button">
+						<i class="fa fa-refresh"></i>
+					</div>
+					<div class="loading-overlay">
+						<i class="loading-icon fa fa-refresh fa-spin fa-lg"></i>
+					</div>
+				</div>
+			</div><!-- /.col -->
+			<div class="col-sm-6 col-md-3">
+				<div class="panel-stat3 bg-danger">
+					<h2 class="m-top-none" id="qtErro">{{ultimos30.qtErro}}</h2>
+					<h5>Erro</h5>
+					<i class="fa fa-arrow-circle-o-up fa-lg"></i><span class="m-left-xs" id="pcErro">{{ultimos30.pcErro}}</span><span class="m-left-xs">% a mais que m&ecirc;s passado</span>
+					<div class="stat-icon">
+						<i class="fa fa-hdd-o fa-3x"></i>
+					</div>
+					<div class="refresh-button">
+						<i class="fa fa-refresh"></i>
+					</div>
+					<div class="loading-overlay">
+						<i class="loading-icon fa fa-refresh fa-spin fa-lg"></i>
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-6 col-md-3">
+				<div class="panel-stat3 bg-info">
+					<h2 class="m-top-none" id="qtPendente">{{ultimos30.qtPendente}}</h2>
+					<h5>Pendente</h5>
+					<i class="fa fa-arrow-circle-o-up fa-lg"></i>
+					<div class="stat-icon">
+						<i class="fa fa-hdd-o fa-3x"></i>
+					</div>
+					<div class="refresh-button">
+						<i class="fa fa-refresh"></i>
+					</div>
+					<div class="loading-overlay">
+						<i class="loading-icon fa fa-refresh fa-spin fa-lg"></i>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div><!-- /.padding-md -->
+</div><!-- /main-container -->
