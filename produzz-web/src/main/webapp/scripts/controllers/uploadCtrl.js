@@ -48,6 +48,7 @@
 	    		},
 	    		'success' : function(file, xhr){
 	    			console.log(xhr);
+	    			$rootScope.idVideo = xhr.videos[0].id;
 	    			$location.path('/upload2');
 	     		$scope.$apply;
 	    		},
@@ -64,7 +65,7 @@
         //Set options for dropzone
         //Visit http://www.dropzonejs.com/#configuration-options for more options
         $scope.dzOptions2 = {
-        		url : 'ws/videos/upload/thumbnail/' + $rootScope.contato.contas[0].id,
+        		url : 'ws/videos/upload/thumbnail/' + $rootScope.contato.contas[0].id + '/' + $rootScope.idVideo,
         		paramName : 'file',
         		maxFiles : 1,
         		maxFilesize : '5',

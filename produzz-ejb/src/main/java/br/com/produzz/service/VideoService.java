@@ -54,7 +54,7 @@ public class VideoService extends GenericService implements Serializable {
 
 			query.executeUpdate();
 
-			retorno = this.findByNomeConta(filename, idConta);
+			retorno = this.findByNomeConta(filename, idConta, 1);
 
 			msgsErro.add("Upload de video com sucesso.");
 			retorno.setMsgsErro(msgsErro);
@@ -68,7 +68,7 @@ public class VideoService extends GenericService implements Serializable {
 		return retorno;
 	}
 
-	public VideoRetorno findByNomeConta(final String nome, final Long idConta) throws Exception {
+	public VideoRetorno findByNomeConta(final String nome, final Long idConta, final Integer limite) throws Exception {
 		LOGGER.info("findByNomeConta(" + nome + ", " + idConta + ")");
 		VideoRetorno retorno = new VideoRetorno();
 		List<String> msgsErro = new ArrayList<String>();
@@ -79,6 +79,10 @@ public class VideoService extends GenericService implements Serializable {
 				.append(" WHERE FK_CONTA = :conta")
 				.append(" AND NM_VIDEO = :nome")
 				.append(" ORDER BY 1 DESC");
+
+		if (Util.isBlankOrNull(limite)) {
+			sql.append(" LIMIT " + limite);
+		}
 
 		try {
 			Query query = em.createNativeQuery(sql.toString(), Video.class);
@@ -111,21 +115,22 @@ public class VideoService extends GenericService implements Serializable {
 		return retorno;
 	}
 
-	public VideoRetorno incluirThumbnail(final Long idConta, final String filename, final byte[] imagem) throws ProduzzException {
-		LOGGER.info("incluir(" + idConta + ", " + filename + ", " + imagem.length + ")");
+	public VideoRetorno incluirThumbnail(final Long idConta, final Long idVideo, final String filename, final byte[] imagem) throws ProduzzException {
+		LOGGER.info("incluir(" + idConta + ", " + idVideo + ", " + filename + ", " + imagem.length + ")");
 		VideoRetorno retorno = new VideoRetorno();
 		List<String> msgsErro = new ArrayList<String>();
 
 		StringBuilder sql = new StringBuilder("");
 		sql.append("INSERT INTO PDZTB020_THUMBNAIL")
-				.append(" (IM_THUMBNAIL, FK_CONTA, TS_CRIACAO)")
-				.append(" VALUES (:imagem, :conta, CURRENT_TIMESTAMP)");
+				.append(" (IM_THUMBNAIL, FK_CONTA, FK_VIDEO, TS_CRIACAO)")
+				.append(" VALUES (:imagem, :conta, :video, CURRENT_TIMESTAMP)");
 
 		try {
 			Query query = em.createNativeQuery(sql.toString());
 
 			query.setParameter("imagem", imagem)
-					.setParameter("conta", idConta);
+					.setParameter("conta", idConta)
+					.setParameter("video", idVideo);
 
 			query.executeUpdate();
 

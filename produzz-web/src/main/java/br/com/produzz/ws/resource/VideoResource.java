@@ -25,6 +25,7 @@ import br.com.produzz.entity.Video;
 import br.com.produzz.exception.GeneralException;
 import br.com.produzz.exception.ProduzzException;
 import br.com.produzz.retorno.Retorno;
+import br.com.produzz.retorno.VideoRetorno;
 import br.com.produzz.service.VideoService;
 import br.com.produzz.util.Util;
 
@@ -44,6 +45,7 @@ public class VideoResource extends GenericResource {
     public Response upload(@PathParam("conta") Long conta, final MultipartFormDataInput req) {
 		LOGGER.debug("upload(" + conta + ", " + req + ")");
 		Response retorno = null;
+		VideoRetorno video = new VideoRetorno();
 
 		try {
 			Map<String, List<InputPart>> uploadForm = req.getFormDataMap();
@@ -56,10 +58,10 @@ public class VideoResource extends GenericResource {
                 byte[] bytes = IOUtils.toByteArray(inputStream);
                 String filename = getFileName(headers);
 
-                service.incluir(conta, filename, bytes);
+                video = service.incluir(conta, filename, bytes);
 	        }
 
-            retorno = build(Response.Status.OK, new Retorno());
+            retorno = build(Response.Status.OK, video);
 
 		} catch (final Exception e) {
 			retorno = build(Response.Status.BAD_REQUEST, "Ops!, Aconteceu algo de errado.");
@@ -71,10 +73,11 @@ public class VideoResource extends GenericResource {
 	@POST
 	@Consumes({ MediaType.MULTIPART_FORM_DATA })
 	@Produces({ MediaType.APPLICATION_JSON })
-	@Path("/upload/thumbnail/{conta}")
-    public Response uploadThumbnail(@PathParam("conta") Long conta, final MultipartFormDataInput req) {
-		LOGGER.debug("uploadThumbnail(" + conta + ", " + req + ")");
+	@Path("/upload/thumbnail/{conta}/{idVideo}")
+    public Response uploadThumbnail(@PathParam("conta") Long conta, @PathParam("idVideo") Long idVideo, final MultipartFormDataInput req) {
+		LOGGER.debug("uploadThumbnail(" + conta + ", " + idVideo + ", " + req + ")");
 		Response retorno = null;
+		VideoRetorno video = new VideoRetorno();
 
 		try {
 			Map<String, List<InputPart>> uploadForm = req.getFormDataMap();
@@ -87,10 +90,10 @@ public class VideoResource extends GenericResource {
                 byte[] bytes = IOUtils.toByteArray(inputStream);
                 String filename = getFileName(headers);
 
-                service.incluirThumbnail(conta, filename, bytes);
+                video = service.incluirThumbnail(conta, idVideo, filename, bytes);
 	        }
 
-            retorno = build(Response.Status.OK, new Retorno());
+            retorno = build(Response.Status.OK, video);
 
 		} catch (final Exception e) {
 			retorno = build(Response.Status.BAD_REQUEST, "Ops!, Aconteceu algo de errado.");
