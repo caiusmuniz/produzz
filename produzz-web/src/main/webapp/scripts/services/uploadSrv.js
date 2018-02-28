@@ -28,21 +28,25 @@
             return _defer.promise;
         };
 
-        _upload.enviar = function(data, acesso) {
+        _upload.publicar = function(data) {
             var _defer = $q.defer();
             var _data = JSON.stringify({
-                "id": "",
-                "nome": "",
+                "id": $rootScope.contato.contas[0].id,
+                "idVideo": $rootScope.idVideo,
+                "idThumbnail": $rootScope.idThumbnail,
+                "titulo": data.titulo,
+                "descricao": data.descricao,
+                "tags": data.tags,
+                "locale": data.locale,
+                "privacidade": data.privacidade,
+                "categoria": data.categoria
             });
 
-            WebService.upload($rootScope.endPoint + '/videos/upload', _data)
+            WebService.create($rootScope.endPoint + '/videos/publish', _data)
             .then(function(res) {
-            	_upload.temInfo = res.temInfo;
-            	_upload.temErro = res.temErro;
-            	_upload.msgsErro = res.msgsErro;
-
-           		if(res.temInfo || !res.temErro) {
-                }
+            		_upload.temInfo = res.temInfo;
+            		_upload.temErro = res.temErro;
+            		_upload.msgsErro = res.msgsErro;
 
            		_defer.resolve(res);
 

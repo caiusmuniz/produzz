@@ -82,8 +82,21 @@
 	    		},
 	    		'success' : function(file, xhr){
 	    			console.log(xhr);
+	    			$rootScope.idThumbnail = xhr.thumbnails[0].id;
 	     		$scope.$apply;
 	    		},
 	    	};
+
+        $scope.publicar = function(video) {
+        		uploadSrv.publicar(video)
+            .then(function(data) {
+   				$scope.temInfo = uploadSrv.temInfo;
+   				$scope.temErro = uploadSrv.temErro;
+       			$scope.messages = uploadSrv.msgsErro;
+            }, function(err) {
+                console.error(err);
+            });
+        		$scope.$apply;
+        };
     });
 })();

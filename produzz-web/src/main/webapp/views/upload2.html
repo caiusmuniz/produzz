@@ -18,6 +18,8 @@
 				<h4 class="text-left"><i class="fa fa-film fa-lg"></i>Informações e Configurações</h4>
 			</div>
 
+			<div ng-include="'views/alertMessage.html'"></div>
+
 			<form novalidate name="uploadForm" class="form-horizontal no-margin form-border" novalidate>
 				<div class="form-group hide">
 					<input name="id" type="text" ng-model="video.id" /><!-- INFORMACAO DE IDENTIFICACAO UNICA DA CONTA -->
@@ -133,8 +135,8 @@
 						<label class="col-lg-4 control-label">Privacidade</label>
 						<div class="col-lg-10">
 							<select class="form-control" ng-model="video.privacidade">
-								<option>Public</option>
-								<option>Private</option>
+								<option value="1" selected="selected">Public</option>
+								<option value="2">Private</option>
 							</select>
 						</div><!-- /.col -->
 					</div>

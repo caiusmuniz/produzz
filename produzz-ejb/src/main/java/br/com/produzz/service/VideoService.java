@@ -14,8 +14,11 @@ import javax.persistence.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import br.com.produzz.entity.Thumbnail;
 import br.com.produzz.entity.Video;
 import br.com.produzz.exception.ProduzzException;
+import br.com.produzz.retorno.ThumbnailRetorno;
+import br.com.produzz.retorno.ThumbnailWs;
 import br.com.produzz.retorno.VideoRetorno;
 import br.com.produzz.retorno.VideoWs;
 import br.com.produzz.util.Constantes;
@@ -34,6 +37,7 @@ public class VideoService extends GenericService implements Serializable {
 	private EntityManager em;
 
 	private static final String NENHUM_VIDEO_FOI_LOCALIZADO = "Nenhum video foi localizado.";
+	private static final String NENHUM_THUMBNAIL_FOI_LOCALIZADO = "Nenhum thumbnail foi localizado.";
 
 	public VideoRetorno incluir(final Long idConta, final String filename, final byte[] imagem) throws ProduzzException {
 		LOGGER.info("incluir(" + idConta + ", " + filename + ", " + imagem.length + ")");
@@ -115,9 +119,9 @@ public class VideoService extends GenericService implements Serializable {
 		return retorno;
 	}
 
-	public VideoRetorno incluirThumbnail(final Long idConta, final Long idVideo, final String filename, final byte[] imagem) throws ProduzzException {
+	public ThumbnailRetorno incluirThumbnail(final Long idConta, final Long idVideo, final String filename, final byte[] imagem) throws ProduzzException {
 		LOGGER.info("incluir(" + idConta + ", " + idVideo + ", " + filename + ", " + imagem.length + ")");
-		VideoRetorno retorno = new VideoRetorno();
+		ThumbnailRetorno retorno = new ThumbnailRetorno();
 		List<String> msgsErro = new ArrayList<String>();
 
 		StringBuilder sql = new StringBuilder("");
@@ -134,7 +138,52 @@ public class VideoService extends GenericService implements Serializable {
 
 			query.executeUpdate();
 
+			retorno = this.findThumbnailByContaVideo(idConta, idVideo);
+
 			msgsErro.add("Upload de thumbnail com sucesso.");
+			retorno.setMsgsErro(msgsErro);
+			retorno.setTemInfo(Boolean.TRUE);
+
+		} catch (final Exception e) {
+			LOGGER.error("Exception: ", e);
+			throw new ProduzzException(e);
+		}
+
+		return retorno;
+	}
+
+	public ThumbnailRetorno findThumbnailByContaVideo(final Long idConta, final Long idVideo) throws Exception {
+		LOGGER.info("findThumbnailByContaVideo(" + idConta + ", " + idVideo + ")");
+		ThumbnailRetorno retorno = new ThumbnailRetorno();
+		List<String> msgsErro = new ArrayList<String>();
+
+		StringBuilder sql = new StringBuilder("");
+		sql.append("SELECT NR_PDZ020, IM_THUMBNAIL")
+				.append(" FROM PDZTB020_THUMBNAIL")
+				.append(" WHERE FK_CONTA = :conta")
+				.append(" AND FK_VIDEO = :video")
+				.append(" ORDER BY 1 DESC");
+
+		try {
+			Query query = em.createNativeQuery(sql.toString(), Thumbnail.class);
+
+			List<Thumbnail> lista = query
+					.setParameter("conta", idConta)
+					.setParameter("video", idVideo)
+					.getResultList();
+
+			if (Util.isNull(lista) || lista.isEmpty()) {
+				LOGGER.error(NENHUM_THUMBNAIL_FOI_LOCALIZADO);
+				msgsErro.add(NENHUM_THUMBNAIL_FOI_LOCALIZADO);
+				retorno.setTemErro(Boolean.TRUE);
+				retorno.setMsgsErro(msgsErro);
+				return retorno;
+
+			} else {
+				retorno.getThumbnails().add(new ThumbnailWs(lista.get(0)));
+			}
+
+			msgsErro.add(Constantes.OPERACAO_OK);
 			retorno.setMsgsErro(msgsErro);
 			retorno.setTemInfo(Boolean.TRUE);
 

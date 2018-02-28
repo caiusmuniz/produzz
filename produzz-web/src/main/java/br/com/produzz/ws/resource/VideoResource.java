@@ -24,7 +24,9 @@ import org.slf4j.LoggerFactory;
 import br.com.produzz.entity.Video;
 import br.com.produzz.exception.GeneralException;
 import br.com.produzz.exception.ProduzzException;
+import br.com.produzz.requisicao.PublicacaoRequisicao;
 import br.com.produzz.retorno.Retorno;
+import br.com.produzz.retorno.ThumbnailRetorno;
 import br.com.produzz.retorno.VideoRetorno;
 import br.com.produzz.service.VideoService;
 import br.com.produzz.util.Util;
@@ -77,7 +79,7 @@ public class VideoResource extends GenericResource {
     public Response uploadThumbnail(@PathParam("conta") Long conta, @PathParam("idVideo") Long idVideo, final MultipartFormDataInput req) {
 		LOGGER.debug("uploadThumbnail(" + conta + ", " + idVideo + ", " + req + ")");
 		Response retorno = null;
-		VideoRetorno video = new VideoRetorno();
+		ThumbnailRetorno thumbnail = new ThumbnailRetorno();
 
 		try {
 			Map<String, List<InputPart>> uploadForm = req.getFormDataMap();
@@ -90,10 +92,10 @@ public class VideoResource extends GenericResource {
                 byte[] bytes = IOUtils.toByteArray(inputStream);
                 String filename = getFileName(headers);
 
-                video = service.incluirThumbnail(conta, idVideo, filename, bytes);
+                thumbnail = service.incluirThumbnail(conta, idVideo, filename, bytes);
 	        }
 
-            retorno = build(Response.Status.OK, video);
+            retorno = build(Response.Status.OK, thumbnail);
 
 		} catch (final Exception e) {
 			retorno = build(Response.Status.BAD_REQUEST, "Ops!, Aconteceu algo de errado.");
@@ -121,6 +123,23 @@ public class VideoResource extends GenericResource {
         return s.trim().replaceAll("\"", "");
     }
 
+    @POST @Path("/publish")
+	@Consumes({ MediaType.APPLICATION_JSON })
+	@Produces({ MediaType.APPLICATION_JSON })
+    public Response publicar(final PublicacaoRequisicao req) throws ProduzzException {
+    		LOGGER.info("publicar(" + req + ")");
+    		Response retorno = null;
+
+    		try {
+    			retorno = build(Response.Status.OK, new Retorno());
+
+    		} catch (final Exception e) {
+    			retorno = build(Response.Status.BAD_REQUEST, "Ops!, Aconteceu algo de errado.");
+    		}
+            
+    		return retorno;
+    }
+    
     @GET
 	@Produces({ MediaType.APPLICATION_JSON })
 	@Path("/download/{filename}")
