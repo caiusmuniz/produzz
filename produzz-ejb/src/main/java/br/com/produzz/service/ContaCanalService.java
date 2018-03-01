@@ -210,4 +210,34 @@ public class ContaCanalService extends GenericService implements Serializable {
 			throw new ProduzzException(e);
 		}
 	}
+
+	public Long findByContaCanal(final Long conta, final Integer canal) throws ProduzzException {
+		LOGGER.info("findByContaCanal(" + conta + ", " + canal + ")");
+		Long retorno = null;
+
+		StringBuilder sql = new StringBuilder("");
+		sql.append("SELECT CC.NR_PDZ012, CC.FK_CONTA, CC.FK_CANAL, CC.ID_USUARIO, CC.ED_PAGINA, CC.DE_FOTO, CC.DE_LOCALE")
+				.append(" , U.DE_NOME, U.DE_SOBRENOME, U.ED_ELETRONICO")
+				.append(" FROM PDZTB012_CONTA_CANAL CC")
+				.append(" INNER JOIN PDZTB005_CONTA_USUARIO CU ON CU.FK_CONTA = CC.FK_CONTA")
+				.append(" INNER JOIN PDZTB001_USUARIO U ON U.NR_PDZ001 = CU.FK_USUARIO")
+				.append(" WHERE CC.FK_CONTA = :conta")
+				.append(" AND CC.FK_CANAL = :canal");
+
+		try {
+			Query query = em.createNativeQuery(sql.toString(), ContaCanal.class);
+
+			retorno = ((ContaCanal) query.setParameter("conta", conta)
+					.setParameter("canal", canal)
+					.getSingleResult()).getId();
+
+		} catch (final NoResultException e) {
+
+		} catch (final Exception e) {
+			LOGGER.error("Exception: ", e);
+			throw new ProduzzException(e);
+		}
+
+		return retorno;
+	}
 }

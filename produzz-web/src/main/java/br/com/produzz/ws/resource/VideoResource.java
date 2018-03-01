@@ -22,12 +22,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import br.com.produzz.entity.Video;
+import br.com.produzz.enumeration.ECanal;
 import br.com.produzz.exception.GeneralException;
 import br.com.produzz.exception.ProduzzException;
 import br.com.produzz.requisicao.PublicacaoRequisicao;
 import br.com.produzz.retorno.Retorno;
 import br.com.produzz.retorno.ThumbnailRetorno;
 import br.com.produzz.retorno.VideoRetorno;
+import br.com.produzz.service.ContaCanalService;
 import br.com.produzz.service.VideoService;
 import br.com.produzz.util.Util;
 
@@ -37,6 +39,9 @@ public class VideoResource extends GenericResource {
 
 	@EJB
 	private VideoService service;
+
+	@EJB
+	private ContaCanalService contaCanalService;
 
 	public static final String UPLOADED_FILE_PARAMETER_NAME = "file";
 
@@ -131,7 +136,9 @@ public class VideoResource extends GenericResource {
     		Response retorno = null;
 
     		try {
-    			retorno = build(Response.Status.OK, new Retorno());
+    			retorno = build(Response.Status.OK,
+    					service.publicar(req,
+    							contaCanalService.findByContaCanal(req.getId(), ECanal.GOOGLE.getCodigo())));
 
     		} catch (final Exception e) {
     			retorno = build(Response.Status.BAD_REQUEST, "Ops!, Aconteceu algo de errado.");

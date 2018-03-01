@@ -17,6 +17,8 @@ import org.slf4j.LoggerFactory;
 import br.com.produzz.entity.Thumbnail;
 import br.com.produzz.entity.Video;
 import br.com.produzz.exception.ProduzzException;
+import br.com.produzz.requisicao.PublicacaoRequisicao;
+import br.com.produzz.retorno.Retorno;
 import br.com.produzz.retorno.ThumbnailRetorno;
 import br.com.produzz.retorno.ThumbnailWs;
 import br.com.produzz.retorno.VideoRetorno;
@@ -184,6 +186,79 @@ public class VideoService extends GenericService implements Serializable {
 			}
 
 			msgsErro.add(Constantes.OPERACAO_OK);
+			retorno.setMsgsErro(msgsErro);
+			retorno.setTemInfo(Boolean.TRUE);
+
+		} catch (final Exception e) {
+			LOGGER.error("Exception: ", e);
+			throw new ProduzzException(e);
+		}
+
+		return retorno;
+	}
+
+	public Retorno publicar(final PublicacaoRequisicao req, final Long contaCanal) throws ProduzzException {
+		LOGGER.info("publicar(" + req + ", " + contaCanal + ")");
+		Retorno retorno = new Retorno();
+		List<String> msgsErro = new ArrayList<String>();
+
+		StringBuilder sql = new StringBuilder("");
+		sql.append("INSERT INTO PDZTB021_PUBLICACAO")
+				.append(" (NM_TITULO, IC_PRIVACIDADE, FK_VIDEO, FK_THUMBNAIL, FK_CONTA_CANAL, FK_CATEGORIA, TS_CRIACAO");
+
+		if (!Util.isBlankOrNull(req.getDescricao())) {
+			sql.append(" , DE_VIDEO");
+		}
+
+		if (!Util.isBlankOrNull(req.getTags())) {
+			sql.append(" , DE_TAGS");
+		}
+
+		if (!Util.isBlankOrNull(req.getLocale())) {
+			sql.append(" , CO_LOCALE");
+		}
+
+		sql.append(" ) VALUES (:titulo, :privacidade, :video, :thumbnail, :contacanal, :categoria, CURRENT_TIMESTAMP");
+
+		if (!Util.isBlankOrNull(req.getDescricao())) {
+			sql.append(", :descricao");
+		}
+
+		if (!Util.isBlankOrNull(req.getTags())) {
+			sql.append(", :tags");
+		}
+
+		if (!Util.isBlankOrNull(req.getLocale())) {
+			sql.append(", :locale");
+		}
+
+		sql.append(")");
+
+		try {
+			Query query = em.createNativeQuery(sql.toString());
+
+			query.setParameter("titulo", req.getTitulo())
+					.setParameter("privacidade", req.getPrivacidade())
+					.setParameter("video", req.getIdVideo())
+					.setParameter("thumbnail", req.getIdThumbnail())
+					.setParameter("contacanal", contaCanal)
+					.setParameter("categoria", req.getCategoria());
+
+			if (!Util.isBlankOrNull(req.getDescricao())) {
+				query.setParameter("descricao", req.getDescricao());
+			}
+
+			if (!Util.isBlankOrNull(req.getTags())) {
+				query.setParameter("tags", req.getTags());
+			}
+
+			if (!Util.isBlankOrNull(req.getLocale())) {
+				query.setParameter("locale", req.getLocale());
+			}
+
+			query.executeUpdate();
+
+			msgsErro.add("Publicacao efetuada com sucesso.");
 			retorno.setMsgsErro(msgsErro);
 			retorno.setTemInfo(Boolean.TRUE);
 
