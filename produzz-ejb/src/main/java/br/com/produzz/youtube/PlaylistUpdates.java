@@ -2,7 +2,6 @@ package br.com.produzz.youtube;
 
 import java.io.IOException;
 import java.util.Calendar;
-import java.util.List;
 
 import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.googleapis.json.GoogleJsonResponseException;
@@ -17,7 +16,6 @@ import com.google.api.services.youtube.model.PlaylistItemSnippet;
 import com.google.api.services.youtube.model.PlaylistSnippet;
 import com.google.api.services.youtube.model.PlaylistStatus;
 import com.google.api.services.youtube.model.ResourceId;
-import com.google.common.collect.Lists;
 
 public class PlaylistUpdates {
 	/** Global instance of the HTTP transport. */
@@ -40,11 +38,18 @@ public class PlaylistUpdates {
 	 */
 	public static void main(String[] args ) {
 		// General read/write scope for YouTube APIs.
-	    List<String> scopes = Lists.newArrayList("https://www.googleapis.com/auth/youtube");
 
 	    try {
-	    	// Authorization.
-	    	Credential credential = Auth.autorizar(scopes, "playlist");
+    		// Authorize the request.
+    		Credential credential;
+
+    		try {
+    			credential = Auth.renovar("1/9GICl3FkHJSxpDDkzvZYgvG8_YOFXPKo1djTuT1Xwjg");
+
+    		} catch (final Exception e) {
+    			credential = Auth.autorizar("playlist");
+//			credential = Auth.renovar(auth.getRefreshToken());
+    		}
 
 	    	// YouTube object used to make all API requests.
 	    	youtube = new YouTube.Builder(HTTP_TRANSPORT, JSON_FACTORY, credential)
@@ -58,16 +63,16 @@ public class PlaylistUpdates {
 	    	insertPlaylistItem(playlistId, VIDEO_ID);
 
 	    } catch (final GoogleJsonResponseException e) {
-	    	System.err.println("There was a service error: " + e.getDetails().getCode() + " : " + e.getDetails().getMessage());
-	    	e.printStackTrace();
+	    		System.err.println("There was a service error: " + e.getDetails().getCode() + " : " + e.getDetails().getMessage());
+	    		e.printStackTrace();
 
 	    } catch (final IOException e) {
-	    	System.err.println("IOException: " + e.getMessage());
-	    	e.printStackTrace();
+	    		System.err.println("IOException: " + e.getMessage());
+	    		e.printStackTrace();
 
 	    } catch (final Throwable t) {
-	    	System.err.println("Throwable: " + t.getMessage());
-	    	t.printStackTrace();
+	    		System.err.println("Throwable: " + t.getMessage());
+	    		t.printStackTrace();
 	    }
 	}
 

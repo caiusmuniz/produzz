@@ -11,7 +11,6 @@ import com.google.api.services.youtube.model.Channel;
 import com.google.api.services.youtube.model.ChannelListResponse;
 import com.google.api.services.youtube.model.PlaylistItem;
 import com.google.api.services.youtube.model.PlaylistItemListResponse;
-import com.google.common.collect.Lists;
 
 /**
  * Print a list of videos uploaded to the authenticated user's YouTube channel.
@@ -32,21 +31,17 @@ public class MyUploads {
      * @param args command line args (not used).
      */
     public static void main(String[] args) {
-        // This OAuth 2.0 access scope allows for read-only access to the
-        // authenticated user's account, but not other types of account access.
-        List<String> scopes = Lists.newArrayList();
-		scopes.add("https://www.googleapis.com/auth/youtube");
-		scopes.add("https://www.googleapis.com/auth/youtube.upload");
-		scopes.add("https://www.googleapis.com/auth/youtubepartner");
-		scopes.add("https://www.googleapis.com/auth/yt-analytics.readonly");
-		scopes.add("https://www.googleapis.com/auth/userinfo.profile");
-		scopes.add("https://www.googleapis.com/auth/userinfo.email");
-
         try {
-            // Authorize the request.
-            Credential auth = Auth.autorizar(scopes, "myuploads");
+        		// Authorize the request.
+        		Credential credential;
 
-            Credential credential = Auth.renovar(auth.getRefreshToken());
+        		try {
+        			credential = Auth.renovar("1/9GICl3FkHJSxpDDkzvZYgvG8_YOFXPKo1djTuT1Xwjg");
+
+        		} catch (final Exception e) {
+        			credential = Auth.autorizar("myuploads");
+//        		credential = Auth.renovar(auth.getRefreshToken());
+        		}
 
             // This object is used to make YouTube Data API requests.
             youtube = new YouTube.Builder(Auth.HTTP_TRANSPORT, Auth.JSON_FACTORY, credential)

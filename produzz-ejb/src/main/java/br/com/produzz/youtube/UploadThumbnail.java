@@ -1,5 +1,12 @@
 package br.com.produzz.youtube;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
 import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.googleapis.json.GoogleJsonResponseException;
 import com.google.api.client.googleapis.media.MediaHttpUploader;
@@ -8,10 +15,6 @@ import com.google.api.client.http.InputStreamContent;
 import com.google.api.services.youtube.YouTube;
 import com.google.api.services.youtube.YouTube.Thumbnails.Set;
 import com.google.api.services.youtube.model.ThumbnailSetResponse;
-import com.google.common.collect.Lists;
-
-import java.io.*;
-import java.util.List;
 
 /**
  * This sample uses MediaHttpUploader to upload an image and then calls the
@@ -35,17 +38,21 @@ public class UploadThumbnail {
      * image. Then call the API to set the image as the thumbnail for the video.
      */
     public static void main(String[] args) {
-        // This OAuth 2.0 access scope allows for full read/write access to the
-        // authenticated user's account.
-        List<String> scopes = Lists.newArrayList("https://www.googleapis.com/auth/youtube");
-
         try {
-            // Authorize the request.
-            Credential credential = Auth.autorizar(scopes, "uploadthumbnail");
+			// Authorize the request.
+			Credential credential;
+
+	    		try {
+	    			credential = Auth.renovar("1/9GICl3FkHJSxpDDkzvZYgvG8_YOFXPKo1djTuT1Xwjg");
+
+	    		} catch (final Exception e) {
+	    			credential = Auth.autorizar("uploadThumbnail");
+//    			credential = Auth.renovar(auth.getRefreshToken());
+	    		}
 
             // This object is used to make YouTube Data API requests.
-            youtube = new YouTube.Builder(Auth.HTTP_TRANSPORT, Auth.JSON_FACTORY, credential).setApplicationName(
-                    "youtube-cmdline-uploadthumbnail-sample").build();
+            youtube = new YouTube.Builder(Auth.HTTP_TRANSPORT, Auth.JSON_FACTORY, credential)
+            			.setApplicationName("youtube-cmdline-uploadthumbnail-sample").build();
 
             // Prompt the user to enter the video ID of the video being updated.
             String videoId = getVideoIdFromUser();

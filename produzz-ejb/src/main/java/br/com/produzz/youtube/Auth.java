@@ -25,8 +25,6 @@ import com.google.api.client.util.store.FileDataStoreFactory;
 import com.google.common.collect.Lists;
 import com.google.gson.JsonObject;
 
-import br.com.produzz.util.Util;
-
 public class Auth {
     /**
      * Define a global instance of the HTTP transport.
@@ -44,21 +42,22 @@ public class Auth {
     private static final String CREDENTIALS_DIRECTORY = ".oauth-credentials";
 
     /**
+     * List of scopes needed to run youtube upload.
+     */
+    private static final List<String> SCOPES = Lists.newArrayList(
+			"https://www.googleapis.com/auth/youtube",
+			"https://www.googleapis.com/auth/youtube.upload",
+			"https://www.googleapis.com/auth/youtubepartner",
+			"https://www.googleapis.com/auth/yt-analytics.readonly",
+			"https://www.googleapis.com/auth/youtube.readonly",
+			"https://www.googleapis.com/auth/userinfo.profile",
+			"https://www.googleapis.com/auth/userinfo.email");
+
+    /**
      * Authorizes the installed application to access user's protected data.
-     * @param scopes              list of scopes needed to run youtube upload.
      * @param credentialDatastore name of the credential datastore to cache OAuth tokens
      */
-    public static Credential autorizar(List<String> scopes, String credentialDatastore) throws IOException {
-    		List<String> lista = scopes;
-
-    		if (Util.isNull(lista)) {
-    			lista = Lists.newArrayList(
-    					"https://www.googleapis.com/auth/youtube",
-    					"https://www.googleapis.com/auth/youtube.upload",
-    					"https://www.googleapis.com/auth/youtubepartner",
-    					"https://www.googleapis.com/auth/yt-analytics.readonly");
-    		}
-
+    public static Credential autorizar(String credentialDatastore) throws IOException {
     		// Load client secrets.
         Reader clientSecretReader = new InputStreamReader(Auth.class.getResourceAsStream("/youtube/client_secrets.json"));
         GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(JSON_FACTORY, clientSecretReader);
@@ -68,7 +67,7 @@ public class Auth {
         DataStore<StoredCredential> datastore = fileDataStoreFactory.getDataStore(credentialDatastore);
 
         GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(
-                HTTP_TRANSPORT, JSON_FACTORY, clientSecrets, lista)
+                HTTP_TRANSPORT, JSON_FACTORY, clientSecrets, SCOPES)
         		.setAccessType("offline")
         		.setApprovalPrompt("force")
         		.setCredentialDataStore(datastore).build();
@@ -80,7 +79,7 @@ public class Auth {
         return new AuthorizationCodeInstalledApp(flow, localReceiver).authorize("user");
     }
 
-    public static Credential renovar(final String refreshToken) throws IOException {
+    public static Credential renovar(final String refreshToken) throws Exception {
 		// Load client secrets.
 		Reader clientSecretReader = new InputStreamReader(Auth.class.getResourceAsStream("/youtube/client_secrets.json"));
 		GoogleClientSecrets clientSecrets =  GoogleClientSecrets.load(JSON_FACTORY, clientSecretReader);
@@ -94,8 +93,8 @@ public class Auth {
 
 		JsonObject credential = new JsonObject();
 		credential.addProperty("type", "authorized_user");
-		credential.addProperty("client_id", "591091485303-6n6ljnjd23gvm9ol0as441d313gnru46.apps.googleusercontent.com");
-		credential.addProperty("client_secret", "oUcWTD4-Z2ATnDany_JnZ37A");
+		credential.addProperty("client_id", clientSecrets.getDetails().getClientId());
+		credential.addProperty("client_secret", clientSecrets.getDetails().getClientSecret());
 		credential.addProperty("refresh_token", refreshToken);
 
 		System.out.println("refresh_token=" + refreshToken);

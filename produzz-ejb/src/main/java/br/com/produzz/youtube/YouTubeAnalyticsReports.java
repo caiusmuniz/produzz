@@ -24,16 +24,6 @@ import java.util.List;
  */
 public class YouTubeAnalyticsReports {
     /**
-     * Define a global instance of the HTTP transport.
-     */
-    private static final HttpTransport HTTP_TRANSPORT = new NetHttpTransport();
-
-    /**
-     * Define a global instance of the JSON factory.
-     */
-    private static final JsonFactory JSON_FACTORY = new JacksonFactory();
-
-    /**
      * Define a global instance of a Youtube object, which will be used
      * to make YouTube Data API requests.
      */
@@ -52,25 +42,17 @@ public class YouTubeAnalyticsReports {
      * @param args command line args (not used).
      */
     public static void main(String[] args) {
-        // These scopes are required to access information about the
-        // authenticated user's YouTube channel as well as Analytics
-        // data for that channel.
-        List<String> scopes = Lists.newArrayList(
-                "https://www.googleapis.com/auth/yt-analytics.readonly",
-                "https://www.googleapis.com/auth/youtube.readonly"
-        );
-
         try {
             // Authorize the request.
-            Credential credential = Auth.autorizar(scopes, "analyticsreports");
+            Credential credential = Auth.autorizar("analyticsReports");
 
             // This object is used to make YouTube Data API requests.
-            youtube = new YouTube.Builder(HTTP_TRANSPORT, JSON_FACTORY, credential)
+            youtube = new YouTube.Builder(Auth.HTTP_TRANSPORT, Auth.JSON_FACTORY, credential)
                     .setApplicationName("youtube-analytics-api-report-example")
                     .build();
 
             // This object is used to make YouTube Analytics API requests.
-            analytics = new YouTubeAnalytics.Builder(HTTP_TRANSPORT, JSON_FACTORY, credential)
+            analytics = new YouTubeAnalytics.Builder(Auth.HTTP_TRANSPORT, Auth.JSON_FACTORY, credential)
                     .setApplicationName("youtube-analytics-api-report-example")
                     .build();
 
@@ -88,6 +70,7 @@ public class YouTubeAnalyticsReports {
             String channelId = defaultChannel.getId();
 
             PrintStream writer = System.out;
+
             if (channelId == null) {
                 writer.println("No channel found.");
 
@@ -191,13 +174,17 @@ public class YouTubeAnalyticsReports {
                 for (int colNum = 0; colNum < results.getColumnHeaders().size(); colNum++) {
                     ColumnHeaders header = results.getColumnHeaders().get(colNum);
                     Object column = row.get(colNum);
+
                     if ("INTEGER".equals(header.getUnknownKeys().get("dataType"))) {
                         long l = ((BigDecimal) column).longValue();
                         writer.printf("%30d", l);
+
                     } else if ("FLOAT".equals(header.getUnknownKeys().get("dataType"))) {
                         writer.printf("%30f", column);
+
                     } else if ("STRING".equals(header.getUnknownKeys().get("dataType"))) {
                         writer.printf("%30s", column);
+
                     } else {
                         // default output.
                         writer.printf("%30s", column);
