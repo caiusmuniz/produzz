@@ -44,7 +44,7 @@ public class MyUploads {
 
         try {
             // Authorize the request.
-            Credential auth = Auth.autorizar(scopes, "myuploads9");
+            Credential auth = Auth.autorizar(scopes, "myuploads");
 
             Credential credential = Auth.renovar(auth.getRefreshToken());
 

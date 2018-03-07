@@ -1,10 +1,8 @@
 package br.com.produzz.youtube;
 
-import java.io.BufferedInputStream;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.util.List;
@@ -99,6 +97,8 @@ public class Auth {
 		credential.addProperty("client_id", "591091485303-6n6ljnjd23gvm9ol0as441d313gnru46.apps.googleusercontent.com");
 		credential.addProperty("client_secret", "oUcWTD4-Z2ATnDany_JnZ37A");
 		credential.addProperty("refresh_token", refreshToken);
+
+		System.out.println("refresh_token=" + refreshToken);
 
 		return new GoogleCredential()
 				.fromStream(new ByteArrayInputStream(credential.toString().getBytes()))

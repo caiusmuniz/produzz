@@ -140,7 +140,7 @@ public class VideoResource extends GenericResource {
     		Response retorno = null;
 
     		try {
-    			Credential credential = Auth.authorize(null, "uploadvideo");
+    			Credential credential = Auth.autorizar(null, "uploadvideo");
 
     			UploadVideo.upload(credential);
 
