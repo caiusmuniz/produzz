@@ -44,7 +44,7 @@ public class PlaylistUpdates {
 
 	    try {
 	    	// Authorization.
-	    	Credential credential = Auth.authorize(scopes, "playlist");
+	    	Credential credential = Auth.autorizar(scopes, "playlist");
 
 	    	// YouTube object used to make all API requests.
 	    	youtube = new YouTube.Builder(HTTP_TRANSPORT, JSON_FACTORY, credential)

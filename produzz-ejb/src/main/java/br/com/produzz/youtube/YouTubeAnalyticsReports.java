@@ -62,7 +62,7 @@ public class YouTubeAnalyticsReports {
 
         try {
             // Authorize the request.
-            Credential credential = Auth.authorize(scopes, "analyticsreports");
+            Credential credential = Auth.autorizar(scopes, "analyticsreports");
 
             // This object is used to make YouTube Data API requests.
             youtube = new YouTube.Builder(HTTP_TRANSPORT, JSON_FACTORY, credential)

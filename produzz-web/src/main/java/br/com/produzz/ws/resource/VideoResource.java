@@ -21,6 +21,8 @@ import org.jboss.resteasy.plugins.providers.multipart.MultipartFormDataInput;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.google.api.client.auth.oauth2.Credential;
+
 import br.com.produzz.entity.Video;
 import br.com.produzz.enumeration.ECanal;
 import br.com.produzz.exception.GeneralException;
@@ -32,6 +34,8 @@ import br.com.produzz.retorno.VideoRetorno;
 import br.com.produzz.service.ContaCanalService;
 import br.com.produzz.service.VideoService;
 import br.com.produzz.util.Util;
+import br.com.produzz.youtube.Auth;
+import br.com.produzz.youtube.UploadVideo;
 
 @Path("/videos")
 public class VideoResource extends GenericResource {
@@ -136,6 +140,10 @@ public class VideoResource extends GenericResource {
     		Response retorno = null;
 
     		try {
+    			Credential credential = Auth.authorize(null, "uploadvideo");
+
+    			UploadVideo.upload(credential);
+
     			retorno = build(Response.Status.OK,
     					service.publicar(req,
     							contaCanalService.findByContaCanal(req.getId(), ECanal.GOOGLE.getCodigo())));

@@ -60,6 +60,9 @@ public class RedeSocialRequisicao implements Serializable {
 	@Size(max = 2048)
 	protected String tokenAcesso;
 
+	@Size(max = 2048)
+	protected String tokenRenovacao;
+
 	public Long getIdUsuario() {
 		return idUsuario;
 	}
@@ -148,6 +151,14 @@ public class RedeSocialRequisicao implements Serializable {
 		this.tokenAcesso = tokenAcesso;
 	}
 
+	public String getTokenRenovacao() {
+		return tokenRenovacao;
+	}
+
+	public void setTokenRenovacao(final String tokenRenovacao) {
+		this.tokenRenovacao = tokenRenovacao;
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -173,6 +184,8 @@ public class RedeSocialRequisicao implements Serializable {
 				.append(idToken)
 				.append(", tokenAcesso=")
 				.append(tokenAcesso)
+				.append(", tokenRenovacao=")
+				.append(tokenRenovacao)
 				.append("]")
 				.toString();
 	}

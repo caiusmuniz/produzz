@@ -63,13 +63,13 @@
 		function connectYoutube(googleUser) {
 			console.log('idConta', $rootScope.contato.contas[0].id);
 
-			plataformaSrv.connectYoutube($rootScope.contato.contas[0].id, googleUser.additionalUserInfo.profile, googleUser.credential)
+			plataformaSrv.connectYoutube($rootScope.contato.contas[0].id, googleUser)
        		.then(function(data) {
    				$scope.temInfo = plataformaSrv.temInfo;
    				$scope.temErro = plataformaSrv.temErro;
        			$scope.messages = plataformaSrv.msgsErro;
 
-				if(plataformaSrv.temInfo || !plataformaSrv.temErro) {
+				if (plataformaSrv.temInfo || !plataformaSrv.temErro) {
 					$scope.buscarContaCanal();
 				}
        		}, function(err) {
@@ -89,7 +89,7 @@
    				$scope.temErro = plataformaSrv.temErro;
        			$scope.messages = plataformaSrv.msgsErro;
 
-				if(plataformaSrv.temInfo || !plataformaSrv.temErro) {
+				if (plataformaSrv.temInfo || !plataformaSrv.temErro) {
 					$scope.buscarContaCanal();
 				}
        		}, function(err) {
@@ -109,7 +109,7 @@
    				$scope.temErro = plataformaSrv.temErro;
        			$scope.messages = plataformaSrv.msgsErro;
 
-				if(plataformaSrv.temInfo || !plataformaSrv.temErro) {
+				if (plataformaSrv.temInfo || !plataformaSrv.temErro) {
 					$scope.buscarContaCanal();
 				}
        		}, function(err) {
@@ -129,7 +129,7 @@
    				$scope.temErro = plataformaSrv.temErro;
        			$scope.messages = plataformaSrv.msgsErro;
 
-				if(plataformaSrv.temInfo || !plataformaSrv.temErro) {
+				if (plataformaSrv.temInfo || !plataformaSrv.temErro) {
 					$scope.buscarContaCanal();
 				}
        		}, function(err) {

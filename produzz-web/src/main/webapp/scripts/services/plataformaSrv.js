@@ -50,19 +50,20 @@
             return _defer.promise;
         };
 
-        _plataforma.connectYoutube = function(conta, data, acesso) {
+        _plataforma.connectYoutube = function(conta, data) {
             var _defer = $q.defer();
             var _data = JSON.stringify({
-                "id": data.id,
+                "id": data.additionalUserInfo.profile.id,
                 "idConta": conta,
-                "nome": data.given_name,
-                "sobrenome": data.family_name,
-                "email": data.email,
-                "link": data.link,
-                "foto": data.picture,
-                "locale": data.locale,
-                "idToken": acesso.idToken,
-                "tokenAcesso": acesso.accessToken
+                "nome": data.additionalUserInfo.profile.given_name,
+                "sobrenome": data.additionalUserInfo.profile.family_name,
+                "email": data.additionalUserInfo.profile.email,
+                "link": data.additionalUserInfo.profile.link,
+                "foto": data.additionalUserInfo.profile.picture,
+                "locale": data.additionalUserInfo.profile.locale,
+                "idToken": data.credential.idToken,
+                "tokenAcesso": data.credential.accessToken,
+                "tokenRenovacao": data.user.refreshToken
             });
 
             WebService.create($rootScope.endPoint + '/plataforma/conectar/google', _data)

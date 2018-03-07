@@ -17,6 +17,7 @@ import org.slf4j.LoggerFactory;
 
 import br.com.produzz.entity.Categoria;
 import br.com.produzz.entity.ContaCanal;
+import br.com.produzz.enumeration.EAtivo;
 import br.com.produzz.enumeration.ECanal;
 import br.com.produzz.exception.ProduzzException;
 import br.com.produzz.requisicao.RedeSocialRequisicao;
@@ -89,12 +90,14 @@ public class ContaCanalService extends GenericService implements Serializable {
 				.append(" FROM PDZTB012_CONTA_CANAL CC")
 				.append(" INNER JOIN PDZTB005_CONTA_USUARIO CU ON CU.FK_CONTA = CC.FK_CONTA")
 				.append(" INNER JOIN PDZTB001_USUARIO U ON U.NR_PDZ001 = CU.FK_USUARIO")
-				.append(" WHERE CC.FK_CONTA = :conta");
+				.append(" WHERE CC.FK_CONTA = :conta")
+				.append(" AND CC.IC_ATIVO = :status");
 
 		try {
 			Query query = em.createNativeQuery(sql.toString(), ContaCanal.class);
 
-			query.setParameter("conta", conta);
+			query.setParameter("conta", conta)
+					.setParameter("status", EAtivo.ATIVO.getCodigo());
 
 			List<ContaCanal> lista = query
 					.getResultList();
@@ -122,7 +125,7 @@ public class ContaCanalService extends GenericService implements Serializable {
 		LOGGER.info("incluir(" + idConta + ", " + idCanal + ", " + req + ")");
 		StringBuilder sql = new StringBuilder("");
 		sql.append("INSERT INTO PDZTB012_CONTA_CANAL")
-				.append(" (FK_CONTA, FK_CANAL, TS_CRIACAO");
+				.append(" (FK_CONTA, FK_CANAL, TS_CRIACAO, IC_ATIVO");
 
 		if (!Util.isBlankOrNull(req.getId())) {
 			sql.append(", ID_USUARIO");
@@ -140,7 +143,11 @@ public class ContaCanalService extends GenericService implements Serializable {
 			sql.append(", DE_LOCALE");
 		}
 
-		sql.append(") VALUES (:conta, :canal, CURRENT_TIMESTAMP");
+		if (!Util.isBlankOrNull(req.getTokenRenovacao())) {
+			sql.append(", DE_TOKEN_RENOVACAO");
+		}
+
+		sql.append(") VALUES (:conta, :canal, CURRENT_TIMESTAMP, :status");
 
 		if (!Util.isBlankOrNull(req.getId())) {
 			sql.append(", :usuario");
@@ -158,13 +165,18 @@ public class ContaCanalService extends GenericService implements Serializable {
 			sql.append(", :locale");
 		}
 
+		if (!Util.isBlankOrNull(req.getTokenRenovacao())) {
+			sql.append(", :token");
+		}
+
 		sql.append(")");
 
 		try {
 			Query query = em.createNativeQuery(sql.toString());
 
 			query.setParameter("conta", idConta)
-					.setParameter("canal", idCanal);
+					.setParameter("canal", idCanal)
+					.setParameter("status", EAtivo.ATIVO.getCodigo());
 
 			if (!Util.isBlankOrNull(req.getId())) {
 				query.setParameter("usuario", req.getId());
@@ -182,6 +194,10 @@ public class ContaCanalService extends GenericService implements Serializable {
 				query.setParameter("locale", req.getLocale());
 			}
 
+			if (!Util.isBlankOrNull(req.getTokenRenovacao())) {
+				query.setParameter("token", req.getTokenRenovacao());
+			}
+
 			query.executeUpdate();
 
 		} catch (final Exception e) {
@@ -193,14 +209,16 @@ public class ContaCanalService extends GenericService implements Serializable {
 	public void excluir(final Long idConta, final Integer idCanal) throws ProduzzException {
 		LOGGER.info("excluir(" + idConta + ", " + idCanal + ")");
 		StringBuilder sql = new StringBuilder("");
-		sql.append("DELETE FROM PDZTB012_CONTA_CANAL")
+		sql.append("UPDATE PDZTB012_CONTA_CANAL")
+				.append(" SET IC_ATIVO = :status")
 				.append(" WHERE FK_CONTA = :conta")
 				.append(" AND FK_CANAL = :canal");
 
 		try {
 			Query query = em.createNativeQuery(sql.toString());
 
-			query.setParameter("conta", idConta)
+			query.setParameter("status", EAtivo.INATIVO.getCodigo())
+					.setParameter("conta", idConta)
 					.setParameter("canal", idCanal);
 
 			query.executeUpdate();

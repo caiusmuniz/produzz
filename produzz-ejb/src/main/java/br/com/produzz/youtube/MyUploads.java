@@ -1,5 +1,9 @@
 package br.com.produzz.youtube;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
 import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.googleapis.json.GoogleJsonResponseException;
 import com.google.api.services.youtube.YouTube;
@@ -8,11 +12,6 @@ import com.google.api.services.youtube.model.ChannelListResponse;
 import com.google.api.services.youtube.model.PlaylistItem;
 import com.google.api.services.youtube.model.PlaylistItemListResponse;
 import com.google.common.collect.Lists;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.List;
 
 /**
  * Print a list of videos uploaded to the authenticated user's YouTube channel.
@@ -45,13 +44,14 @@ public class MyUploads {
 
         try {
             // Authorize the request.
-            Credential credential = Auth.authorize(scopes, "myuploads");
-            credential.setAccessToken("ya29.GltKBelUpO6ACg3JZW9ygX9gBcqgBgMTzFcEatOE1_NCFygXjGV82AX2TdjXRclNCw_zvJOsYo2WMw7m-SpOha5IM86N5YPizaPkbHgE55stRzkGx7QjlkysG3Go");
-            credential.setRefreshToken("");
+            Credential auth = Auth.autorizar(scopes, "myuploads9");
+
+            Credential credential = Auth.renovar(auth.getRefreshToken());
 
             // This object is used to make YouTube Data API requests.
-            youtube = new YouTube.Builder(Auth.HTTP_TRANSPORT, Auth.JSON_FACTORY, credential).setApplicationName(
-                    "youtube-cmdline-myuploads-sample").build();
+            youtube = new YouTube.Builder(Auth.HTTP_TRANSPORT, Auth.JSON_FACTORY, credential)
+            			.setApplicationName("youtube-cmdline-myuploads-sample")
+            			.build();
 
             // Call the API's channels.list method to retrieve the
             // resource that represents the authenticated user's channel.
