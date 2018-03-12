@@ -86,7 +86,7 @@ public class ContaCanalService extends GenericService implements Serializable {
 
 		StringBuilder sql = new StringBuilder("");
 		sql.append("SELECT CC.NR_PDZ012, CC.FK_CONTA, CC.FK_CANAL, CC.ID_USUARIO, CC.ED_PAGINA, CC.DE_FOTO, CC.DE_LOCALE")
-				.append(" , U.DE_NOME, U.DE_SOBRENOME, U.ED_ELETRONICO")
+				.append(" , U.DE_NOME, U.DE_SOBRENOME, U.ED_ELETRONICO, CC.DE_TOKEN_RENOVACAO")
 				.append(" FROM PDZTB012_CONTA_CANAL CC")
 				.append(" INNER JOIN PDZTB005_CONTA_USUARIO CU ON CU.FK_CONTA = CC.FK_CONTA")
 				.append(" INNER JOIN PDZTB001_USUARIO U ON U.NR_PDZ001 = CU.FK_USUARIO")
@@ -235,18 +235,20 @@ public class ContaCanalService extends GenericService implements Serializable {
 
 		StringBuilder sql = new StringBuilder("");
 		sql.append("SELECT CC.NR_PDZ012, CC.FK_CONTA, CC.FK_CANAL, CC.ID_USUARIO, CC.ED_PAGINA, CC.DE_FOTO, CC.DE_LOCALE")
-				.append(" , U.DE_NOME, U.DE_SOBRENOME, U.ED_ELETRONICO")
+				.append(" , U.DE_NOME, U.DE_SOBRENOME, U.ED_ELETRONICO, CC.DE_TOKEN_RENOVACAO")
 				.append(" FROM PDZTB012_CONTA_CANAL CC")
 				.append(" INNER JOIN PDZTB005_CONTA_USUARIO CU ON CU.FK_CONTA = CC.FK_CONTA")
 				.append(" INNER JOIN PDZTB001_USUARIO U ON U.NR_PDZ001 = CU.FK_USUARIO")
 				.append(" WHERE CC.FK_CONTA = :conta")
-				.append(" AND CC.FK_CANAL = :canal");
+				.append(" AND CC.FK_CANAL = :canal")
+				.append(" AND CC.IC_ATIVO = :status");
 
 		try {
 			Query query = em.createNativeQuery(sql.toString(), ContaCanal.class);
 
 			retorno = ((ContaCanal) query.setParameter("conta", conta)
 					.setParameter("canal", canal)
+					.setParameter("status", EAtivo.ATIVO.getCodigo())
 					.getSingleResult()).getId();
 
 		} catch (final NoResultException e) {

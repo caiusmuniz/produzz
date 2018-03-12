@@ -151,6 +151,10 @@
 		var providerGoogle = new firebase.auth.GoogleAuthProvider();
 		providerGoogle.addScope('profile,email,openid');
 
+		providerGoogle.setCustomParameters({
+			'access_type' : 'offline'
+		});
+
 		var providerFacebook = new firebase.auth.FacebookAuthProvider();
 		providerFacebook.addScope('public_profile,user_friends,email');
 

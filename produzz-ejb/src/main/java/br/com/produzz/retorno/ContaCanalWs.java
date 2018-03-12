@@ -20,6 +20,7 @@ public class ContaCanalWs implements Serializable {
 	private String nome;
 	private String sobrenome;
 	private String email;
+	private String token;
 
 	public ContaCanalWs(final ContaCanal item) {
 		this.id = item.getIdUsuario();
@@ -29,6 +30,7 @@ public class ContaCanalWs implements Serializable {
 		this.nome = item.getNome();
 		this.sobrenome = item.getSobrenome();
 		this.email = item.getEmail();
+		this.token = item.getToken();
 	}
 
 	public String getId() {
@@ -87,6 +89,14 @@ public class ContaCanalWs implements Serializable {
 		this.email = email;
 	}
 
+	public String getToken() {
+		return token;
+	}
+
+	public void setToken(final String token) {
+		this.token = token;
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -104,6 +114,8 @@ public class ContaCanalWs implements Serializable {
 				.append(sobrenome)
 				.append(", email=")
 				.append(email)
+				.append(", token=")
+				.append(token)
 				.append("]");
 		return builder.toString();
 	}

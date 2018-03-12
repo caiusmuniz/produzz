@@ -33,14 +33,14 @@ public class MyUploads {
     public static void main(String[] args) {
         try {
         		// Authorize the request.
-        		Credential credential;
+        		Credential credential = null;
 
         		try {
-        			credential = Auth.renovar("1/9GICl3FkHJSxpDDkzvZYgvG8_YOFXPKo1djTuT1Xwjg");
+        			credential = Auth.renovar(
+        					Auth.autorizar("myuploads").getAccessToken());
 
         		} catch (final Exception e) {
-        			credential = Auth.autorizar("myuploads");
-//        		credential = Auth.renovar(auth.getRefreshToken());
+        			System.exit(0);
         		}
 
             // This object is used to make YouTube Data API requests.

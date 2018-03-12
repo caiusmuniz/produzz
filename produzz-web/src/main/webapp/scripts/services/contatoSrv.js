@@ -32,7 +32,10 @@
         };
 
         _contato.google = function(data, acesso) {
-            var _defer = $q.defer();
+        		console.log('data', data);
+        		console.log('acesso', acesso);
+
+        		var _defer = $q.defer();
             var _data = JSON.stringify({
                 "id": data.id,
                 "nome": data.given_name,

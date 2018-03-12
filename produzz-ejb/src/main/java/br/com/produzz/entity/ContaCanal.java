@@ -44,6 +44,9 @@ public class ContaCanal implements Serializable {
 	@Column(name = "ED_ELETRONICO")
 	private String email;
 
+	@Column(name = "DE_TOKEN_RENOVACAO")
+	private String token;
+
 	public Long getId() {
 		return id;
 	}
@@ -124,6 +127,14 @@ public class ContaCanal implements Serializable {
 		this.email = email;
 	}
 
+	public String getToken() {
+		return token;
+	}
+
+	public void setToken(final String token) {
+		this.token = token;
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -148,6 +159,8 @@ public class ContaCanal implements Serializable {
 				.append(sobrenome)
 				.append(", email=")
 				.append(email)
+				.append(", token=")
+				.append(token)
 				.append("]")
 				.toString();
 	}

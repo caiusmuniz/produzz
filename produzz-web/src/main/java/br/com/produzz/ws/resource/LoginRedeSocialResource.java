@@ -13,6 +13,8 @@ import javax.ws.rs.core.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.google.api.client.auth.oauth2.Credential;
+
 import br.com.produzz.enumeration.ECanal;
 import br.com.produzz.enumeration.ESistemaAutenticador;
 import br.com.produzz.exception.ProduzzException;
@@ -25,6 +27,7 @@ import br.com.produzz.service.ContaCanalService;
 import br.com.produzz.service.ContatoService;
 import br.com.produzz.util.Constantes;
 import br.com.produzz.util.Util;
+import br.com.produzz.youtube.Auth;
 
 @Path("plataforma")
 public class LoginRedeSocialResource extends GenericResource {
@@ -135,7 +138,13 @@ public class LoginRedeSocialResource extends GenericResource {
         Response retorno = null;
 
         try {
-        		contaCanalService.incluir(req.getIdConta(), canal.getCodigo(), req);
+			if (ECanal.GOOGLE.getCodigo() == canal.getCodigo()) {
+				LOGGER.debug("Chamada a renovar token");
+				Credential credential = Auth.renovar(req.getTokenAcesso());
+				req.setTokenRenovacao(credential.getAccessToken());
+			}
+
+			contaCanalService.incluir(req.getIdConta(), canal.getCodigo(), req);
 
         		retorno = build(Response.Status.OK, new Retorno());
 

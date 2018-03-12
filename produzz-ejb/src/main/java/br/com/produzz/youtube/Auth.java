@@ -97,8 +97,6 @@ public class Auth {
 		credential.addProperty("client_secret", clientSecrets.getDetails().getClientSecret());
 		credential.addProperty("refresh_token", refreshToken);
 
-		System.out.println("refresh_token=" + refreshToken);
-
 		return new GoogleCredential()
 				.fromStream(new ByteArrayInputStream(credential.toString().getBytes()))
         			.setAccessToken(refresh.getAccessToken())
