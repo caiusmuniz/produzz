@@ -1,22 +1,17 @@
 package br.com.produzz.youtube;
 
+import java.io.IOException;
+import java.io.PrintStream;
+import java.math.BigDecimal;
+import java.util.List;
+
 import com.google.api.client.auth.oauth2.Credential;
-import com.google.api.client.http.HttpTransport;
-import com.google.api.client.http.javanet.NetHttpTransport;
-import com.google.api.client.json.JsonFactory;
-import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.services.youtube.YouTube;
 import com.google.api.services.youtube.model.Channel;
 import com.google.api.services.youtube.model.ChannelListResponse;
 import com.google.api.services.youtubeAnalytics.YouTubeAnalytics;
 import com.google.api.services.youtubeAnalytics.model.ResultTable;
 import com.google.api.services.youtubeAnalytics.model.ResultTable.ColumnHeaders;
-import com.google.common.collect.Lists;
-
-import java.io.IOException;
-import java.io.PrintStream;
-import java.math.BigDecimal;
-import java.util.List;
 
 /**
  * This example uses the YouTube Data and YouTube Analytics APIs to retrieve
@@ -43,8 +38,16 @@ public class YouTubeAnalyticsReports {
      */
     public static void main(String[] args) {
         try {
-            // Authorize the request.
-            Credential credential = Auth.autorizar("analyticsReports");
+        		// Authorize the request.
+        		Credential credential;
+
+        		try {
+        			credential = Auth.renovar("1/9GICl3FkHJSxpDDkzvZYgvG8_YOFXPKo1djTuT1Xwjg");
+
+        		} catch (final Exception e) {
+        			credential = Auth.autorizar("analyticsReports");
+//    			credential = Auth.renovar(auth.getRefreshToken());
+        		}
 
             // This object is used to make YouTube Data API requests.
             youtube = new YouTube.Builder(Auth.HTTP_TRANSPORT, Auth.JSON_FACTORY, credential)
@@ -102,10 +105,10 @@ public class YouTubeAnalyticsReports {
      */
     private static ResultTable executeViewsOverTimeQuery(YouTubeAnalytics analytics, String id) throws IOException {
         return analytics.reports()
-                .query("channel==" + id,     // channel id
-                        "2012-01-01",         // Start date.
-                        "2012-01-14",         // End date.
-                        "views,uniques")      // Metrics.
+                .query("channel==" + id,		// channel id
+                        "2010-01-01",		// Start date.
+                        "2018-03-10",		// End date.
+                        "views")		// Metrics.
                 .setDimensions("day")
                 .setSort("day")
                 .execute();
@@ -120,10 +123,10 @@ public class YouTubeAnalyticsReports {
      */
     private static ResultTable executeTopVideosQuery(YouTubeAnalytics analytics, String id) throws IOException {
         return analytics.reports()
-                .query("channel==" + id,                          // channel id
-                        "2012-01-01",                              // Start date.
-                        "2012-08-14",                              // End date.
-                        "views,subscribersGained,subscribersLost") // Metrics.
+                .query("channel==" + id,								// channel id
+                        "2010-01-01",								// Start date.
+                        "2018-03-10",								// End date.
+                        "views,subscribersGained,subscribersLost")	// Metrics.
                 .setDimensions("video")
                 .setSort("-views")
                 .setMaxResults(10)
@@ -139,10 +142,10 @@ public class YouTubeAnalyticsReports {
      */
     private static ResultTable executeDemographicsQuery(YouTubeAnalytics analytics, String id) throws IOException {
         return analytics.reports()
-                .query("channel==" + id,     // channel id
-                        "2007-01-01",         // Start date.
-                        "2012-08-14",         // End date.
-                        "viewerPercentage")   // Metrics.
+                .query("channel==" + id,			// channel id
+                        "2010-01-01",			// Start date.
+                        "2018-03-10",			// End date.
+                        "viewerPercentage")		// Metrics.
                 .setDimensions("ageGroup,gender")
                 .setSort("-viewerPercentage")
                 .execute();
