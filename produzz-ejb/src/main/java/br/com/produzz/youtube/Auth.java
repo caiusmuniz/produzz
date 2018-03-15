@@ -7,6 +7,9 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.auth.oauth2.StoredCredential;
 import com.google.api.client.extensions.java6.auth.oauth2.AuthorizationCodeInstalledApp;
@@ -26,6 +29,8 @@ import com.google.common.collect.Lists;
 import com.google.gson.JsonObject;
 
 public class Auth {
+	private static final Logger LOGGER = LoggerFactory.getLogger(Auth.class);
+
     /**
      * Define a global instance of the HTTP transport.
      */
@@ -58,6 +63,8 @@ public class Auth {
      * @param credentialDatastore name of the credential datastore to cache OAuth tokens
      */
     public static Credential autorizar(String credentialDatastore) throws IOException {
+    		LOGGER.info("autorizar(" + credentialDatastore + ")");
+
     		// Load client secrets.
         Reader clientSecretReader = new InputStreamReader(Auth.class.getResourceAsStream("/youtube/client_secrets.json"));
         GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(JSON_FACTORY, clientSecretReader);
@@ -80,6 +87,8 @@ public class Auth {
     }
 
     public static Credential renovar(final String refreshToken) throws Exception {
+		LOGGER.info("renovar(" + refreshToken + ")");
+
 		// Load client secrets.
 		Reader clientSecretReader = new InputStreamReader(Auth.class.getResourceAsStream("/youtube/client_secrets.json"));
 		GoogleClientSecrets clientSecrets =  GoogleClientSecrets.load(JSON_FACTORY, clientSecretReader);

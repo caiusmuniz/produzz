@@ -5,6 +5,9 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.googleapis.json.GoogleJsonResponseException;
 import com.google.api.client.googleapis.media.MediaHttpUploader;
@@ -16,6 +19,8 @@ import com.google.api.services.youtube.model.VideoSnippet;
 import com.google.api.services.youtube.model.VideoStatus;
 
 public class UploadVideo {
+	private static final Logger LOGGER = LoggerFactory.getLogger(UploadVideo.class);
+
 	/**
      * Define a global instance of a Youtube object, which will be used to make YouTube Data API requests.
      */
@@ -37,26 +42,17 @@ public class UploadVideo {
     public static void main(String[] args) {
         try {
         		// Authorize the request.
-    			Credential credential;
+    			Credential credential = null;
 
     			try {
-    				credential = Auth.renovar("1/9GICl3FkHJSxpDDkzvZYgvG8_YOFXPKo1djTuT1Xwjg");
+        			credential = Auth.renovar(
+        					Auth.autorizar("myuploads").getAccessToken());
 
-    			} catch (final Exception e) {
-    				credential = Auth.autorizar("uploadVideo");
-//    			credential = Auth.renovar(auth.getRefreshToken());
+        		} catch (final Exception e) {
+        			System.exit(0);
     			}
 
             upload(credential);
-
-        } catch (final GoogleJsonResponseException e) {
-            System.err.println("GoogleJsonResponseException code: " + e.getDetails().getCode() + " : "
-                    + e.getDetails().getMessage());
-            e.printStackTrace();
-
-        } catch (final IOException e) {
-            System.err.println("IOException: " + e.getMessage());
-            e.printStackTrace();
 
         } catch (final Throwable t) {
             System.err.println("Throwable: " + t.getMessage());
@@ -65,10 +61,12 @@ public class UploadVideo {
     }
 
     public static void upload(final Credential credential) {
-        try {
+    		LOGGER.info("credential=" + credential);
+
+    		try {
             // This object is used to make YouTube Data API requests.
-            youtube = new YouTube.Builder(Auth.HTTP_TRANSPORT, Auth.JSON_FACTORY, credential).setApplicationName(
-                    "youtube-cmdline-uploadvideo-sample").build();
+            youtube = new YouTube.Builder(Auth.HTTP_TRANSPORT, Auth.JSON_FACTORY, credential)
+            			.setApplicationName("youtube-cmdline-uploadvideo-sample").build();
 
             System.out.println("Uploading: " + SAMPLE_VIDEO_FILENAME);
 	        // Add extra information to the video before uploading.

@@ -55,6 +55,11 @@
             controller: 'uploadCtrl'
         })
 
+        .when('/analytics', {
+            templateUrl: 'views/analytics.html',
+            controller: 'analyticsCtrl'
+        })
+
         .otherwise({redirectTo: '/login'});
 
     	dropzoneOpsProvider.setOptions({

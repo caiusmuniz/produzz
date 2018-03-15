@@ -229,9 +229,9 @@ public class ContaCanalService extends GenericService implements Serializable {
 		}
 	}
 
-	public Long findByContaCanal(final Long conta, final Integer canal) throws ProduzzException {
+	public ContaCanal findByContaCanal(final Long conta, final Integer canal) throws ProduzzException {
 		LOGGER.info("findByContaCanal(" + conta + ", " + canal + ")");
-		Long retorno = null;
+		ContaCanal retorno = null;
 
 		StringBuilder sql = new StringBuilder("");
 		sql.append("SELECT CC.NR_PDZ012, CC.FK_CONTA, CC.FK_CANAL, CC.ID_USUARIO, CC.ED_PAGINA, CC.DE_FOTO, CC.DE_LOCALE")
@@ -249,7 +249,7 @@ public class ContaCanalService extends GenericService implements Serializable {
 			retorno = ((ContaCanal) query.setParameter("conta", conta)
 					.setParameter("canal", canal)
 					.setParameter("status", EAtivo.ATIVO.getCodigo())
-					.getSingleResult()).getId();
+					.getSingleResult());
 
 		} catch (final NoResultException e) {
 

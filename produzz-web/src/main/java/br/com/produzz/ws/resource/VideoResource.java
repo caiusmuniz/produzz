@@ -21,8 +21,7 @@ import org.jboss.resteasy.plugins.providers.multipart.MultipartFormDataInput;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.google.api.client.auth.oauth2.Credential;
-
+import br.com.produzz.entity.ContaCanal;
 import br.com.produzz.entity.Video;
 import br.com.produzz.enumeration.ECanal;
 import br.com.produzz.exception.GeneralException;
@@ -140,18 +139,19 @@ public class VideoResource extends GenericResource {
     		Response retorno = null;
 
     		try {
-    			Credential credential = Auth.autorizar("uploadvideo");
+    			ContaCanal contaCanal = contaCanalService.findByContaCanal(req.getId(), ECanal.GOOGLE.getCodigo());
 
-    			UploadVideo.upload(credential);
+    			UploadVideo.upload(
+    					Auth.renovar(contaCanal.getToken()));
 
     			retorno = build(Response.Status.OK,
-    					service.publicar(req,
-    							contaCanalService.findByContaCanal(req.getId(), ECanal.GOOGLE.getCodigo())));
+    					service.publicar(req, contaCanal.getId()));
 
     		} catch (final Exception e) {
+    			LOGGER.error("Exception: ", e);
     			retorno = build(Response.Status.BAD_REQUEST, "Ops!, Aconteceu algo de errado.");
     		}
-            
+
     		return retorno;
     }
     
