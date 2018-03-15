@@ -39,16 +39,26 @@ public class YouTubeAnalyticsReports {
     public static void main(String[] args) {
         try {
         		// Authorize the request.
-        		Credential credential;
+        		Credential credential = null;
 
         		try {
-        			credential = Auth.renovar("1/9GICl3FkHJSxpDDkzvZYgvG8_YOFXPKo1djTuT1Xwjg");
+        			credential = Auth.renovar(
+        					Auth.autorizar("analyticsReports").getAccessToken());
 
         		} catch (final Exception e) {
-        			credential = Auth.autorizar("analyticsReports");
-//    			credential = Auth.renovar(auth.getRefreshToken());
-        		}
+        			System.exit(0);
+    			}
 
+        		listar(credential);
+
+        } catch (final Throwable t) {
+            System.err.println("Throwable: " + t.getMessage());
+            t.printStackTrace();
+        }
+    }
+
+    public static void listar(final Credential credential) {
+    		try {
             // This object is used to make YouTube Data API requests.
             youtube = new YouTube.Builder(Auth.HTTP_TRANSPORT, Auth.JSON_FACTORY, credential)
                     .setApplicationName("youtube-analytics-api-report-example")

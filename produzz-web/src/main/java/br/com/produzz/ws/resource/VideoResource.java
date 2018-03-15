@@ -35,6 +35,7 @@ import br.com.produzz.service.VideoService;
 import br.com.produzz.util.Util;
 import br.com.produzz.youtube.Auth;
 import br.com.produzz.youtube.UploadVideo;
+import br.com.produzz.youtube.YouTubeAnalyticsReports;
 
 @Path("/videos")
 public class VideoResource extends GenericResource {
@@ -47,6 +48,29 @@ public class VideoResource extends GenericResource {
 	private ContaCanalService contaCanalService;
 
 	public static final String UPLOADED_FILE_PARAMETER_NAME = "file";
+
+	@GET
+	@Path("analytics/{conta}")
+	@Produces({ MediaType.APPLICATION_JSON })
+	public Response get(@PathParam("conta") Long conta) {
+		LOGGER.info("get(" + conta + ")");
+        Response retorno = null;
+
+		try {
+			ContaCanal contaCanal = contaCanalService.findByContaCanal(conta, ECanal.GOOGLE.getCodigo());
+
+			YouTubeAnalyticsReports.listar(
+					Auth.renovar(contaCanal.getToken()));
+
+			retorno = build(Response.Status.OK,
+					new Retorno());
+
+		} catch (final Exception e) {
+			retorno = build(Response.Status.BAD_REQUEST, "Ops!, Aconteceu algo de errado.");
+		}
+        
+        return retorno;
+	}
 
 	@POST
 	@Consumes({ MediaType.MULTIPART_FORM_DATA })
