@@ -3,12 +3,11 @@ package br.com.produzz.youtube;
 import java.io.IOException;
 import java.util.Calendar;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.googleapis.json.GoogleJsonResponseException;
-import com.google.api.client.http.HttpTransport;
-import com.google.api.client.http.javanet.NetHttpTransport;
-import com.google.api.client.json.JsonFactory;
-import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.services.youtube.YouTube;
 import com.google.api.services.youtube.model.Playlist;
 import com.google.api.services.youtube.model.PlaylistItem;
@@ -17,12 +16,10 @@ import com.google.api.services.youtube.model.PlaylistSnippet;
 import com.google.api.services.youtube.model.PlaylistStatus;
 import com.google.api.services.youtube.model.ResourceId;
 
-public class PlaylistUpdates {
-	/** Global instance of the HTTP transport. */
-	private static final HttpTransport HTTP_TRANSPORT = new NetHttpTransport();
+import br.com.produzz.util.Util;
 
-	/** Global instance of the JSON factory. */
-	private static final JsonFactory JSON_FACTORY = new JacksonFactory();
+public class PlaylistUpdates {
+	private static final Logger LOGGER = LoggerFactory.getLogger(PlaylistUpdates.class);
 
 	/** Global instance of YouTube object to make all API requests. */
 	private static YouTube youtube;
@@ -37,30 +34,39 @@ public class PlaylistUpdates {
 	 * @param args command line args (not used).
 	 */
 	public static void main(String[] args ) {
-		// General read/write scope for YouTube APIs.
-
 	    try {
-    		// Authorize the request.
-    		Credential credential;
+    			// Authorize the request.
+    			Credential credential = null;
 
-    		try {
-    			credential = Auth.renovar("1/9GICl3FkHJSxpDDkzvZYgvG8_YOFXPKo1djTuT1Xwjg");
+    			try {
+    				credential = Auth.renovar(
+    						Auth.autorizar("playlist").getAccessToken());
 
-    		} catch (final Exception e) {
-    			credential = Auth.autorizar("playlist");
-//			credential = Auth.renovar(auth.getRefreshToken());
-    		}
+    			} catch (final Exception e) {
+    				System.exit(0);
+    			}
 
-	    	// YouTube object used to make all API requests.
-	    	youtube = new YouTube.Builder(HTTP_TRANSPORT, JSON_FACTORY, credential)
-	    			.setApplicationName("youtube-cmdline-playlistupdates-sample")
-	    			.build();
+    			playlist(credential, null, VIDEO_ID);
 
-	    	// Creates a new playlist in the authorized user's channel.
-	    	String playlistId = insertPlaylist();
+	    } catch (final Throwable t) {
+            System.err.println("Throwable: " + t.getMessage());
+            t.printStackTrace();
+        }
+	}
 
-	    	// If a valid playlist was created, adds a new playlistitem with a video to that playlist.
-	    	insertPlaylistItem(playlistId, VIDEO_ID);
+	public static void playlist(final Credential credential, final String idPlaylist, final String idVideo) {
+		LOGGER.info("playlist(" + credential + ", " + idPlaylist + ", " + idVideo + ")");
+
+		try {
+			// YouTube object used to make all API requests.
+	    		youtube = new YouTube.Builder(Auth.HTTP_TRANSPORT, Auth.JSON_FACTORY, credential)
+	    				.setApplicationName("Plataforma-Produzz")
+	    				.build();
+
+	    		// If a valid playlist was created, adds a new playlistitem with a video to that playlist.
+	    		insertPlaylistItem(
+	    				Util.isBlankOrNull(idPlaylist) ? insertPlaylist() : idPlaylist,
+	    				idVideo);
 
 	    } catch (final GoogleJsonResponseException e) {
 	    		System.err.println("There was a service error: " + e.getDetails().getCode() + " : " + e.getDetails().getMessage());

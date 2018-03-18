@@ -2,7 +2,6 @@ package br.com.produzz.youtube;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.util.List;
@@ -62,8 +61,9 @@ public class Auth {
      * Authorizes the installed application to access user's protected data.
      * @param credentialDatastore name of the credential datastore to cache OAuth tokens
      */
-    public static Credential autorizar(String credentialDatastore) throws IOException {
+    public static Credential autorizar(String credentialDatastore) throws Exception {
     		LOGGER.info("autorizar(" + credentialDatastore + ")");
+    		System.out.println("autorizar(" + credentialDatastore + ")");
 
     		// Load client secrets.
         Reader clientSecretReader = new InputStreamReader(Auth.class.getResourceAsStream("/youtube/client_secrets.json"));
@@ -88,6 +88,7 @@ public class Auth {
 
     public static Credential renovar(final String refreshToken) throws Exception {
 		LOGGER.info("renovar(" + refreshToken + ")");
+		System.out.println("renovar(" + refreshToken + ")");
 
 		// Load client secrets.
 		Reader clientSecretReader = new InputStreamReader(Auth.class.getResourceAsStream("/youtube/client_secrets.json"));

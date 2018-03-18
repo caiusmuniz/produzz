@@ -7,6 +7,9 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.googleapis.json.GoogleJsonResponseException;
 import com.google.api.client.googleapis.media.MediaHttpUploader;
@@ -16,12 +19,9 @@ import com.google.api.services.youtube.YouTube;
 import com.google.api.services.youtube.YouTube.Thumbnails.Set;
 import com.google.api.services.youtube.model.ThumbnailSetResponse;
 
-/**
- * This sample uses MediaHttpUploader to upload an image and then calls the
- * API's youtube.thumbnails.set method to set the image as the custom thumbnail
- * for a video.
- */
 public class UploadThumbnail {
+	private static final Logger LOGGER = LoggerFactory.getLogger(UploadThumbnail.class);
+
     /**
      * Define a global instance of a Youtube object, which will be used
      * to make YouTube Data API requests.
@@ -40,19 +40,32 @@ public class UploadThumbnail {
     public static void main(String[] args) {
         try {
 			// Authorize the request.
-			Credential credential;
+			Credential credential = null;
 
 	    		try {
-	    			credential = Auth.renovar("1/9GICl3FkHJSxpDDkzvZYgvG8_YOFXPKo1djTuT1Xwjg");
+    				credential = Auth.renovar(
+    						Auth.autorizar("uploadThumbnail").getRefreshToken());
 
 	    		} catch (final Exception e) {
-	    			credential = Auth.autorizar("uploadThumbnail");
-//    			credential = Auth.renovar(auth.getRefreshToken());
+	    			System.exit(0);
 	    		}
 
+	    		uploadThumbnail(credential);
+
+	    } catch (final Throwable t) {
+            System.err.println("Throwable: " + t.getMessage());
+            t.printStackTrace();
+        }
+	}
+
+	public static void uploadThumbnail(final Credential credential) {
+		LOGGER.info("uploadThumbnail(" + credential + ")");
+
+		try {
             // This object is used to make YouTube Data API requests.
             youtube = new YouTube.Builder(Auth.HTTP_TRANSPORT, Auth.JSON_FACTORY, credential)
-            			.setApplicationName("youtube-cmdline-uploadthumbnail-sample").build();
+            			.setApplicationName("Plataforma-Produzz")
+            			.build();
 
             // Prompt the user to enter the video ID of the video being updated.
             String videoId = getVideoIdFromUser();

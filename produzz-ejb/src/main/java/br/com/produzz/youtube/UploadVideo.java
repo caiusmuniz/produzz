@@ -52,7 +52,7 @@ public class UploadVideo {
         			System.exit(0);
     			}
 
-            upload(credential);
+            upload(credential, SAMPLE_VIDEO_FILENAME);
 
         } catch (final Throwable t) {
             System.err.println("Throwable: " + t.getMessage());
@@ -60,15 +60,15 @@ public class UploadVideo {
         }
     }
 
-    public static void upload(final Credential credential) {
-    		LOGGER.info("credential=" + credential);
+    public static void upload(final Credential credential, final String pathVideo) {
+    		LOGGER.info("upload(" + credential + ", " + pathVideo + ")");
 
     		try {
             // This object is used to make YouTube Data API requests.
             youtube = new YouTube.Builder(Auth.HTTP_TRANSPORT, Auth.JSON_FACTORY, credential)
-            			.setApplicationName("youtube-cmdline-uploadvideo-sample").build();
+            			.setApplicationName("Plataforma-Produzz")
+            			.build();
 
-            System.out.println("Uploading: " + SAMPLE_VIDEO_FILENAME);
 	        // Add extra information to the video before uploading.
 	        Video videoObjectDefiningMetadata = new Video();
 

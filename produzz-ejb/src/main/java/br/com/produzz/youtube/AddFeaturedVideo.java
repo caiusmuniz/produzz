@@ -4,12 +4,11 @@ import java.io.IOException;
 import java.math.BigInteger;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.googleapis.json.GoogleJsonResponseException;
-import com.google.api.client.http.HttpTransport;
-import com.google.api.client.http.javanet.NetHttpTransport;
-import com.google.api.client.json.JsonFactory;
-import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.services.youtube.YouTube;
 import com.google.api.services.youtube.model.Channel;
 import com.google.api.services.youtube.model.ChannelListResponse;
@@ -22,15 +21,7 @@ import com.google.api.services.youtube.model.PromotedItemId;
 import com.google.common.collect.Lists;
 
 public class AddFeaturedVideo {
-    /**
-     * Global instance of the HTTP transport.
-     */
-    private static final HttpTransport HTTP_TRANSPORT = new NetHttpTransport();
-
-    /**
-     * Global instance of the JSON factory.
-     */
-    private static final JsonFactory JSON_FACTORY = new JacksonFactory();
+	private static final Logger LOGGER = LoggerFactory.getLogger(AddFeaturedVideo.class);
 
 	/**
 	 * Global instance of Youtube object to make all API requests.
@@ -45,19 +36,32 @@ public class AddFeaturedVideo {
     public static void main(String[] args) {
         try {
 	    		// Authorize the request.
-	    		Credential credential;
+	    		Credential credential = null;
 	
 	    		try {
-	    			credential = Auth.renovar("1/9GICl3FkHJSxpDDkzvZYgvG8_YOFXPKo1djTuT1Xwjg");
-	
-	    		} catch (final Exception e) {
-	    			credential = Auth.autorizar("addFeatured");
-//    			credential = Auth.renovar(auth.getRefreshToken());
-	    		}
+    				credential = Auth.renovar(
+    						Auth.autorizar("addFeatured").getAccessToken());
 
+    			} catch (final Exception e) {
+    				System.exit(0);
+    			}
+
+	    		addFeatured(credential);
+
+	    } catch (final Throwable t) {
+            System.err.println("Throwable: " + t.getMessage());
+            t.printStackTrace();
+        }
+	}
+
+	public static void addFeatured(final Credential credential) {
+		LOGGER.info("addFeatured(" + credential + ")");
+
+		try {
             // YouTube object used to make all API requests.
-            youtube = new YouTube.Builder(HTTP_TRANSPORT, JSON_FACTORY, credential)
-            			.setApplicationName("youtube-cmdline-addfeaturedvideo-sample").build();
+            youtube = new YouTube.Builder(Auth.HTTP_TRANSPORT, Auth.JSON_FACTORY, credential)
+            			.setApplicationName("Plataforma-Produzz")
+            			.build();
 
             // Fetch the user's channel. We also fetch the uploads playlist so we can use this later
             // to find the most recently uploaded video
