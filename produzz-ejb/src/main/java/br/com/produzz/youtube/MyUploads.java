@@ -42,7 +42,7 @@ public class MyUploads {
 
         		try {
         			credential = Auth.renovar(
-        					Auth.autorizar("myUploads1").getAccessToken());
+        					Auth.autorizar("myUploads").getAccessToken());
 
         		} catch (final Exception e) {
         			System.exit(0);
@@ -71,9 +71,9 @@ public class MyUploads {
             // this use case. The channel's contentDetails part contains
             // playlist IDs relevant to the channel, including the ID for the
             // list that contains videos uploaded to the channel.
-            YouTube.Channels.List channelRequest = youtube.channels().list("contentDetails");
+            YouTube.Channels.List channelRequest = youtube.channels().list("id,snippet,contentDetails,status");
             channelRequest.setMine(true);
-            channelRequest.setFields("items/contentDetails,nextPageToken,pageInfo");
+            channelRequest.setFields("items(id,snippet/title,snippet/description,snippet/publishedAt,status/privacyStatus,contentDetails),nextPageToken,pageInfo");
             ChannelListResponse channelResult = channelRequest.execute();
 
             List<Channel> channelsList = channelResult.getItems();
@@ -83,11 +83,11 @@ public class MyUploads {
             System.out.println("=============================================================\n");
 
             for (Channel canal : channelsList) {
-                //System.out.println(" channel id  = " + canal.getContentDetails().Id());
-                //System.out.println(" titulo      = " + canal.getSnippet().getTitle());
-                //System.out.println(" description = " + canal.getSnippet().getDescription());
-                //System.out.println(" publicacao  = " + canal.getSnippet().getPublishedAt());
-                //System.out.println(" status      = " + canal.getStatus().getPrivacyStatus());
+                System.out.println(" channel id  = " + canal.getId());
+                System.out.println(" titulo      = " + canal.getSnippet().getTitle());
+                System.out.println(" description = " + canal.getSnippet().getDescription());
+                System.out.println(" publicacao  = " + canal.getSnippet().getPublishedAt());
+                System.out.println(" status      = " + canal.getStatus().getPrivacyStatus());
                 //System.out.println("\n-------------------------------------------------------------\n");
 
                 // The user's default channel is the first item in the list.
@@ -144,7 +144,7 @@ public class MyUploads {
      * @param iterator of Playlist Items from uploaded Playlist
      */
     private static void prettyPrint(int size, Iterator<PlaylistItem> playlistEntries) {
-        System.out.println("\t\tTotal Videos Uploaded: " + size);
+        System.out.println("\n\t\tTotal Videos Uploaded: " + size);
         System.out.println("\n-------------------------------------------------------------\n");
 
         while (playlistEntries.hasNext()) {

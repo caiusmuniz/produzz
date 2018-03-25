@@ -1,6 +1,7 @@
 package br.com.produzz.youtube;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -18,6 +19,8 @@ import com.google.api.services.youtube.model.Video;
 import com.google.api.services.youtube.model.VideoSnippet;
 import com.google.api.services.youtube.model.VideoStatus;
 
+import br.com.produzz.enumeration.EPrivacyStatus;
+
 public class UploadVideo {
 	private static final Logger LOGGER = LoggerFactory.getLogger(UploadVideo.class);
 
@@ -31,7 +34,7 @@ public class UploadVideo {
      */
     private static final String VIDEO_FILE_FORMAT = "video/*";
 
-    private static final String SAMPLE_VIDEO_FILENAME = "Masha e o Urso - Canção De Belleza (BELEZA PERIGOSA).mp4";
+    private static final String SAMPLE_VIDEO_FILENAME = "teste.mp4";
 
     /**
      * Upload the user-selected video to the user's YouTube channel. The code
@@ -46,13 +49,28 @@ public class UploadVideo {
 
     			try {
         			credential = Auth.renovar(
-        					Auth.autorizar("myuploads").getAccessToken());
+        					Auth.autorizar("upload").getAccessToken());
 
         		} catch (final Exception e) {
         			System.exit(0);
     			}
 
-            upload(credential, SAMPLE_VIDEO_FILENAME);
+    			Calendar cal = Calendar.getInstance();
+
+    	        // Set the keyword tags that you want to associate with the video.
+    	        List<String> tags = new ArrayList<String>();
+    	        tags.add("test");
+    	        tags.add("example");
+    	        tags.add("java");
+    	        tags.add("YouTube Data API V3");
+    	        tags.add("erase me");
+
+            upload(credential,
+            			"Test Upload via Java on " + cal.getTime(),
+            			"Video uploaded via YouTube Data API V3 using the Java library " + "on " + cal.getTime(),
+            			tags,
+            			EPrivacyStatus.PRIVADO,
+            			UploadVideo.class.getResourceAsStream("/youtube/" + SAMPLE_VIDEO_FILENAME));
 
         } catch (final Throwable t) {
             System.err.println("Throwable: " + t.getMessage());
@@ -60,8 +78,9 @@ public class UploadVideo {
         }
     }
 
-    public static void upload(final Credential credential, final String pathVideo) {
-    		LOGGER.info("upload(" + credential + ", " + pathVideo + ")");
+    public static void upload(final Credential credential, final String titulo, final String descricao, final List<String> tags,
+    			final EPrivacyStatus privacy, final InputStream input) {
+    		LOGGER.info("upload(" + credential + ", " + titulo + ", " + descricao + ", " + tags + ", " + privacy + ", " + input + ")");
 
     		try {
             // This object is used to make YouTube Data API requests.
@@ -75,35 +94,19 @@ public class UploadVideo {
 	        // Set the video to be publicly visible. This is the default
 	        // setting. Other supporting settings are "unlisted" and "private."
 	        VideoStatus status = new VideoStatus();
-	        status.setPrivacyStatus("private");
+	        status.setPrivacyStatus(privacy.getCodigo());
 	        videoObjectDefiningMetadata.setStatus(status);
 
 	        // Most of the video's metadata is set on the VideoSnippet object.
 	        VideoSnippet snippet = new VideoSnippet();
-
-	        // This code uses a Calendar instance to create a unique name and
-	        // description for test purposes so that you can easily upload
-	        // multiple files. You should remove this code from your project
-	        // and use your own standard names instead.
-	        Calendar cal = Calendar.getInstance();
-	        snippet.setTitle("Test Upload via Java on " + cal.getTime());
-	        snippet.setDescription(
-	                "Video uploaded via YouTube Data API V3 using the Java library " + "on " + cal.getTime());
-
-	        // Set the keyword tags that you want to associate with the video.
-	        List<String> tags = new ArrayList<String>();
-	        tags.add("test");
-	        tags.add("example");
-	        tags.add("java");
-	        tags.add("YouTube Data API V3");
-	        tags.add("erase me");
+	        snippet.setTitle(titulo);
+	        snippet.setDescription(descricao);
 	        snippet.setTags(tags);
 
 	        // Add the completed snippet object to the video resource.
 	        videoObjectDefiningMetadata.setSnippet(snippet);
 
-	        InputStreamContent mediaContent = new InputStreamContent(VIDEO_FILE_FORMAT,
-	                UploadVideo.class.getResourceAsStream("/" + SAMPLE_VIDEO_FILENAME));
+	        InputStreamContent mediaContent = new InputStreamContent(VIDEO_FILE_FORMAT, input);
 
 	        // Insert the video. The command sends three arguments. The first
 	        // specifies which information the API request is setting and which

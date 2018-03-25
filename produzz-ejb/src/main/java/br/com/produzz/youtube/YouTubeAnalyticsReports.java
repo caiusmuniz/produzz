@@ -5,6 +5,9 @@ import java.io.PrintStream;
 import java.math.BigDecimal;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.services.youtube.YouTube;
 import com.google.api.services.youtube.model.Channel;
@@ -18,6 +21,8 @@ import com.google.api.services.youtubeAnalytics.model.ResultTable.ColumnHeaders;
  * YouTube Analytics data. It also uses OAuth 2.0 for authorization.
  */
 public class YouTubeAnalyticsReports {
+	private static final Logger LOGGER = LoggerFactory.getLogger(YouTubeAnalyticsReports.class);
+
     /**
      * Define a global instance of a Youtube object, which will be used
      * to make YouTube Data API requests.
@@ -58,39 +63,44 @@ public class YouTubeAnalyticsReports {
     }
 
     public static void listar(final Credential credential) {
+    		LOGGER.info("listar(" + credential + ")");
     		try {
             // This object is used to make YouTube Data API requests.
             youtube = new YouTube.Builder(Auth.HTTP_TRANSPORT, Auth.JSON_FACTORY, credential)
-                    .setApplicationName("youtube-analytics-api-report-example")
+                    .setApplicationName("Plataforma-Produzz")
                     .build();
 
             // This object is used to make YouTube Analytics API requests.
             analytics = new YouTubeAnalytics.Builder(Auth.HTTP_TRANSPORT, Auth.JSON_FACTORY, credential)
-                    .setApplicationName("youtube-analytics-api-report-example")
+                    .setApplicationName("Plataforma-Produzz")
                     .build();
 
             // Construct a request to retrieve the current user's channel ID.
-            YouTube.Channels.List channelRequest = youtube.channels().list("id,snippet");
+            YouTube.Channels.List channelRequest = youtube.channels().list("id,snippet,contentDetails,status");
             channelRequest.setMine(true);
-            channelRequest.setFields("items(id,snippet/title)");
+            channelRequest.setFields("items(id,snippet/title,snippet/description,snippet/publishedAt,status/privacyStatus,contentDetails),nextPageToken,pageInfo");
             ChannelListResponse channels = channelRequest.execute();
 
             // List channels associated with the user.
-            List<Channel> listOfChannels = channels.getItems();
+            List<Channel> channelsList = channels.getItems();
 
-            // The user's default channel is the first item in the list.
-            Channel defaultChannel = listOfChannels.get(0);
-            String channelId = defaultChannel.getId();
+            System.out.println("=============================================================");
+            System.out.println("\t\tTotal Channels: " + channelsList.size());
+            System.out.println("=============================================================\n");
 
-            PrintStream writer = System.out;
+            for (Channel canal : channelsList) {
+                System.out.println(" channel id  = " + canal.getId());
+                System.out.println(" titulo      = " + canal.getSnippet().getTitle());
+                System.out.println(" description = " + canal.getSnippet().getDescription());
+                System.out.println(" publicacao  = " + canal.getSnippet().getPublishedAt());
+                System.out.println(" status      = " + canal.getStatus().getPrivacyStatus());
+                //System.out.println("\n-------------------------------------------------------------\n");
 
-            if (channelId == null) {
-                writer.println("No channel found.");
+                // The user's default channel is the first item in the list.
+                //Channel defaultChannel = listOfChannels.get(0);
+                String channelId = canal.getId();
 
-            } else {
-                writer.println("Default Channel: " + defaultChannel.getSnippet().getTitle() +
-                        " ( " + channelId + " )\n");
-
+                PrintStream writer = System.out;
                 printData(writer, "Views Over Time.", executeViewsOverTimeQuery(analytics, channelId));
                 printData(writer, "Top Videos", executeTopVideosQuery(analytics, channelId));
                 printData(writer, "Demographics", executeDemographicsQuery(analytics, channelId));
@@ -116,8 +126,8 @@ public class YouTubeAnalyticsReports {
     private static ResultTable executeViewsOverTimeQuery(YouTubeAnalytics analytics, String id) throws IOException {
         return analytics.reports()
                 .query("channel==" + id,		// channel id
-                        "2010-01-01",		// Start date.
-                        "2018-03-10",		// End date.
+                        "2001-01-01",		// Start date.
+                        "2018-03-18",		// End date.
                         "views")		// Metrics.
                 .setDimensions("day")
                 .setSort("day")
@@ -134,8 +144,8 @@ public class YouTubeAnalyticsReports {
     private static ResultTable executeTopVideosQuery(YouTubeAnalytics analytics, String id) throws IOException {
         return analytics.reports()
                 .query("channel==" + id,								// channel id
-                        "2010-01-01",								// Start date.
-                        "2018-03-10",								// End date.
+                        "2001-01-01",								// Start date.
+                        "2018-03-18",								// End date.
                         "views,subscribersGained,subscribersLost")	// Metrics.
                 .setDimensions("video")
                 .setSort("-views")
@@ -153,8 +163,8 @@ public class YouTubeAnalyticsReports {
     private static ResultTable executeDemographicsQuery(YouTubeAnalytics analytics, String id) throws IOException {
         return analytics.reports()
                 .query("channel==" + id,			// channel id
-                        "2010-01-01",			// Start date.
-                        "2018-03-10",			// End date.
+                        "2001-01-01",			// Start date.
+                        "2018-03-18",			// End date.
                         "viewerPercentage")		// Metrics.
                 .setDimensions("ageGroup,gender")
                 .setSort("-viewerPercentage")
@@ -169,7 +179,7 @@ public class YouTubeAnalyticsReports {
      * @param results data returned from the API.
      */
     private static void printData(PrintStream writer, String title, ResultTable results) {
-        writer.println("Report: " + title);
+        writer.println("\nReport: " + title);
 
         if (results.getRows() == null || results.getRows().isEmpty()) {
             writer.println("No results Found.");
@@ -205,7 +215,6 @@ public class YouTubeAnalyticsReports {
                 }
                 writer.println();
             }
-            writer.println();
         }
     }
 }
