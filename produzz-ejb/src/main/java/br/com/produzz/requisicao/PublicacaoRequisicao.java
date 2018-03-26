@@ -42,8 +42,8 @@ public class PublicacaoRequisicao extends Requisicao implements Serializable {
 	@Size(max = 10)
 	protected String locale;
 
-	@Size(max = 1)
-	protected Integer privacidade;
+	@Size(max = 7)
+	protected String privacidade;
 
 	@Size(max = 11)
 	protected Long categoria;
@@ -104,11 +104,11 @@ public class PublicacaoRequisicao extends Requisicao implements Serializable {
 		this.locale = locale;
 	}
 
-	public Integer getPrivacidade() {
+	public String getPrivacidade() {
 		return privacidade;
 	}
 
-	public void setPrivacidade(final Integer privacidade) {
+	public void setPrivacidade(final String privacidade) {
 		this.privacidade = privacidade;
 	}
 

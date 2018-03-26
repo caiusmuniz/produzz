@@ -96,6 +96,7 @@
             }, function(err) {
                 console.error(err);
             });
+        		$location.path('/upload');
         		$scope.$apply;
         };
     });

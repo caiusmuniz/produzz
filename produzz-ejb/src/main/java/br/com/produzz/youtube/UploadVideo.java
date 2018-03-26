@@ -1,5 +1,6 @@
 package br.com.produzz.youtube;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -20,6 +21,7 @@ import com.google.api.services.youtube.model.VideoSnippet;
 import com.google.api.services.youtube.model.VideoStatus;
 
 import br.com.produzz.enumeration.EPrivacyStatus;
+import br.com.produzz.util.Util;
 
 public class UploadVideo {
 	private static final Logger LOGGER = LoggerFactory.getLogger(UploadVideo.class);
@@ -32,9 +34,9 @@ public class UploadVideo {
     /**
      * Define a global variable that specifies the MIME type of the video being uploaded.
      */
-    private static final String VIDEO_FILE_FORMAT = "video/*";
+    private static final String VIDEO_FILE_FORMAT = "video/mp4";
 
-    private static final String SAMPLE_VIDEO_FILENAME = "teste.mp4";
+    private static final String SAMPLE_VIDEO_FILENAME = "IMG_0710.mp4";
 
     /**
      * Upload the user-selected video to the user's YouTube channel. The code
@@ -70,6 +72,7 @@ public class UploadVideo {
             			"Video uploaded via YouTube Data API V3 using the Java library " + "on " + cal.getTime(),
             			tags,
             			EPrivacyStatus.PRIVADO,
+            			null,
             			UploadVideo.class.getResourceAsStream("/youtube/" + SAMPLE_VIDEO_FILENAME));
 
         } catch (final Throwable t) {
@@ -78,9 +81,10 @@ public class UploadVideo {
         }
     }
 
-    public static void upload(final Credential credential, final String titulo, final String descricao, final List<String> tags,
-    			final EPrivacyStatus privacy, final InputStream input) {
-    		LOGGER.info("upload(" + credential + ", " + titulo + ", " + descricao + ", " + tags + ", " + privacy + ", " + input + ")");
+    public static String upload(final Credential credential, final String titulo, final String descricao, final List<String> tags,
+    			final EPrivacyStatus privacy, final byte[] content, final InputStream input) {
+    		LOGGER.info("upload(" + credential + ", " + titulo + ", " + descricao + ", " + tags + ", " + privacy + ", " + content + ")");
+    		String idVideo = "";
 
     		try {
             // This object is used to make YouTube Data API requests.
@@ -105,8 +109,17 @@ public class UploadVideo {
 
 	        // Add the completed snippet object to the video resource.
 	        videoObjectDefiningMetadata.setSnippet(snippet);
+ 
+	        InputStreamContent mediaContent;
 
-	        InputStreamContent mediaContent = new InputStreamContent(VIDEO_FILE_FORMAT, input);
+	        if (Util.isNull(content)) {
+	        		mediaContent = new InputStreamContent(VIDEO_FILE_FORMAT, input);
+
+	        } else {
+        			mediaContent = new InputStreamContent(VIDEO_FILE_FORMAT, getVideo(content));
+	        }
+
+	        mediaContent.setLength(content.length);
 
 	        // Insert the video. The command sends three arguments. The first
 	        // specifies which information the API request is setting and which
@@ -163,6 +176,9 @@ public class UploadVideo {
 	        System.out.println("  - Tags: " + returnedVideo.getSnippet().getTags());
 	        System.out.println("  - Privacy Status: " + returnedVideo.getStatus().getPrivacyStatus());
 	        System.out.println("  - Video Count: " + returnedVideo.getStatistics().getViewCount());    	
+            System.out.println("  - Video Size: " + content.length);
+
+	        idVideo = returnedVideo.getId();
 
         } catch (final GoogleJsonResponseException e) {
             System.err.println("GoogleJsonResponseException code: " + e.getDetails().getCode() + " : "
@@ -177,5 +193,25 @@ public class UploadVideo {
             System.err.println("Throwable: " + t.getMessage());
             t.printStackTrace();
         }
+
+    		return idVideo;
     }
+
+    private static InputStream getVideo(final byte[] content) {
+		InputStream input = null;
+
+		try {
+    			input = new ByteArrayInputStream(content, 0, content.length);
+    			int tamanho = input.available();
+
+    			if (tamanho == 0) {
+    				input.read(content);
+    				tamanho = input.available();
+    			}
+    			System.out.println("bytes=" + tamanho);
+
+    		} catch (final Exception e) { }
+
+    		return input;
+	}
 }

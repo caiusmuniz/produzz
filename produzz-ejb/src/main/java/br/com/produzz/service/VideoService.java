@@ -16,6 +16,7 @@ import org.slf4j.LoggerFactory;
 
 import br.com.produzz.entity.Thumbnail;
 import br.com.produzz.entity.Video;
+import br.com.produzz.enumeration.EPrivacyStatus;
 import br.com.produzz.exception.ProduzzException;
 import br.com.produzz.requisicao.PublicacaoRequisicao;
 import br.com.produzz.retorno.Retorno;
@@ -63,6 +64,47 @@ public class VideoService extends GenericService implements Serializable {
 			retorno = this.findByNomeConta(filename, idConta, 1);
 
 			msgsErro.add("Upload de video com sucesso.");
+			retorno.setMsgsErro(msgsErro);
+			retorno.setTemInfo(Boolean.TRUE);
+
+		} catch (final Exception e) {
+			LOGGER.error("Exception: ", e);
+			throw new ProduzzException(e);
+		}
+
+		return retorno;
+	}
+
+	public VideoRetorno findById(final Long idVideo) throws Exception {
+		LOGGER.info("findById(" + idVideo + ")");
+		VideoRetorno retorno = new VideoRetorno();
+		List<String> msgsErro = new ArrayList<String>();
+
+		StringBuilder sql = new StringBuilder("");
+		sql.append("SELECT NR_PDZ019, NM_VIDEO, IM_VIDEO")
+				.append(" FROM PDZTB019_VIDEO")
+				.append(" WHERE NR_PDZ019 = :id")
+				.append(" ORDER BY 1 DESC");
+
+		try {
+			Query query = em.createNativeQuery(sql.toString(), Video.class);
+
+			List<Video> lista = query
+					.setParameter("id", idVideo)
+					.getResultList();
+
+			if (Util.isNull(lista) || lista.isEmpty()) {
+				LOGGER.error(NENHUM_VIDEO_FOI_LOCALIZADO);
+				msgsErro.add(NENHUM_VIDEO_FOI_LOCALIZADO);
+				retorno.setTemErro(Boolean.TRUE);
+				retorno.setMsgsErro(msgsErro);
+				return retorno;
+
+			} else {
+				retorno.getVideos().add(new VideoWs(lista.get(0)));
+			}
+
+			msgsErro.add(Constantes.OPERACAO_OK);
 			retorno.setMsgsErro(msgsErro);
 			retorno.setTemInfo(Boolean.TRUE);
 
@@ -143,6 +185,47 @@ public class VideoService extends GenericService implements Serializable {
 			retorno = this.findThumbnailByContaVideo(idConta, idVideo);
 
 			msgsErro.add("Upload de thumbnail com sucesso.");
+			retorno.setMsgsErro(msgsErro);
+			retorno.setTemInfo(Boolean.TRUE);
+
+		} catch (final Exception e) {
+			LOGGER.error("Exception: ", e);
+			throw new ProduzzException(e);
+		}
+
+		return retorno;
+	}
+
+	public ThumbnailRetorno findThumbnailById(final Long idThumbnail) throws Exception {
+		LOGGER.info("findThumbnailByContaVideo(" + idThumbnail + ")");
+		ThumbnailRetorno retorno = new ThumbnailRetorno();
+		List<String> msgsErro = new ArrayList<String>();
+
+		StringBuilder sql = new StringBuilder("");
+		sql.append("SELECT NR_PDZ020, IM_THUMBNAIL")
+				.append(" FROM PDZTB020_THUMBNAIL")
+				.append(" WHERE NR_PDZ020 = :id")
+				.append(" ORDER BY 1 DESC");
+
+		try {
+			Query query = em.createNativeQuery(sql.toString(), Thumbnail.class);
+
+			List<Thumbnail> lista = query
+					.setParameter("id", idThumbnail)
+					.getResultList();
+
+			if (Util.isNull(lista) || lista.isEmpty()) {
+				LOGGER.error(NENHUM_THUMBNAIL_FOI_LOCALIZADO);
+				msgsErro.add(NENHUM_THUMBNAIL_FOI_LOCALIZADO);
+				retorno.setTemErro(Boolean.TRUE);
+				retorno.setMsgsErro(msgsErro);
+				return retorno;
+
+			} else {
+				retorno.getThumbnails().add(new ThumbnailWs(lista.get(0)));
+			}
+
+			msgsErro.add(Constantes.OPERACAO_OK);
 			retorno.setMsgsErro(msgsErro);
 			retorno.setTemInfo(Boolean.TRUE);
 
@@ -238,7 +321,7 @@ public class VideoService extends GenericService implements Serializable {
 			Query query = em.createNativeQuery(sql.toString());
 
 			query.setParameter("titulo", req.getTitulo())
-					.setParameter("privacidade", req.getPrivacidade())
+					.setParameter("privacidade", EPrivacyStatus.get(req.getPrivacidade()).getId())
 					.setParameter("video", req.getIdVideo())
 					.setParameter("thumbnail", req.getIdThumbnail())
 					.setParameter("contacanal", contaCanal)

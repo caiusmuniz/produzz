@@ -1,10 +1,10 @@
 package br.com.produzz.youtube;
 
-import java.io.BufferedInputStream;
 import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 
 import org.slf4j.Logger;
@@ -31,7 +31,7 @@ public class UploadThumbnail {
     /**
      * Define a global variable that specifies the MIME type of the image being uploaded.
      */
-    private static final String IMAGE_FILE_FORMAT = "image/png";
+    private static final String IMAGE_FILE_FORMAT = "image/*";
 
     /**
      * Prompt the user to specify a video ID and the path for a thumbnail
@@ -50,23 +50,6 @@ public class UploadThumbnail {
 	    			System.exit(0);
 	    		}
 
-	    		uploadThumbnail(credential);
-
-	    } catch (final Throwable t) {
-            System.err.println("Throwable: " + t.getMessage());
-            t.printStackTrace();
-        }
-	}
-
-	public static void uploadThumbnail(final Credential credential) {
-		LOGGER.info("uploadThumbnail(" + credential + ")");
-
-		try {
-            // This object is used to make YouTube Data API requests.
-            youtube = new YouTube.Builder(Auth.HTTP_TRANSPORT, Auth.JSON_FACTORY, credential)
-            			.setApplicationName("Plataforma-Produzz")
-            			.build();
-
             // Prompt the user to enter the video ID of the video being updated.
             String videoId = getVideoIdFromUser();
             System.out.println("You chose " + videoId + " to upload a thumbnail.");
@@ -75,11 +58,28 @@ public class UploadThumbnail {
             File imageFile = getImageFromUser();
             System.out.println("You chose " + imageFile + " to upload.");
 
+//	    		uploadThumbnail(credential, videoId, new BufferedInputStream(new FileInputStream(imageFile)));
+
+	    } catch (final Throwable t) {
+            System.err.println("Throwable: " + t.getMessage());
+            t.printStackTrace();
+        }
+	}
+
+	public static void uploadThumbnail(final Credential credential, final String videoId, final byte[] content) {
+		LOGGER.info("uploadThumbnail(" + credential + ", " + videoId + ", " + content + ")");
+
+		try {
+            // This object is used to make YouTube Data API requests.
+            youtube = new YouTube.Builder(Auth.HTTP_TRANSPORT, Auth.JSON_FACTORY, credential)
+            			.setApplicationName("Plataforma-Produzz")
+            			.build();
+
             // Create an object that contains the thumbnail image file's
             // contents.
             InputStreamContent mediaContent = new InputStreamContent(
-                    IMAGE_FILE_FORMAT, new BufferedInputStream(new FileInputStream(imageFile)));
-            mediaContent.setLength(imageFile.length());
+                    IMAGE_FILE_FORMAT, getVideo(content));
+            mediaContent.setLength(content.length);
 
             // Create an API request that specifies that the mediaContent
             // object is the thumbnail of the specified video.
@@ -108,24 +108,16 @@ public class UploadThumbnail {
                         case INITIATION_STARTED:
                             System.out.println("Initiation Started");
                             break;
-                        // This value is set after the initiation request
-                        //  completes.
                         case INITIATION_COMPLETE:
                             System.out.println("Initiation Completed");
                             break;
-                        // This value is set after a media file chunk is
-                        // uploaded.
                         case MEDIA_IN_PROGRESS:
                             System.out.println("Upload in progress");
                             System.out.println("Upload percentage: " + uploader.getProgress());
                             break;
-                        // This value is set after the entire media file has
-                        //  been successfully uploaded.
                         case MEDIA_COMPLETE:
                             System.out.println("Upload Completed!");
                             break;
-                        // This value indicates that the upload process has
-                        //  not started yet.
                         case NOT_STARTED:
                             System.out.println("Upload Not Started!");
                             break;
@@ -139,7 +131,8 @@ public class UploadThumbnail {
 
             // Print the URL for the updated video's thumbnail image.
             System.out.println("\n================== Uploaded Thumbnail ==================\n");
-            System.out.println("  - Url: " + setResponse.getItems().get(0).getDefault().getUrl());
+            System.out.println("  - Url.: " + setResponse.getItems().get(0).getDefault().getUrl());
+            System.out.println("  - Size: " + content.length);
 
         } catch (final GoogleJsonResponseException e) {
             System.err.println("GoogleJsonResponseException code: " + e.getDetails().getCode() + " : "
@@ -189,4 +182,9 @@ public class UploadThumbnail {
 
         return new File(path);
     }
+
+    private static InputStream getVideo(final byte[] content) {
+		System.out.println("Video=" + content + ", " + content.length);
+		return new ByteArrayInputStream(content, 0, content.length);
+	}
 }

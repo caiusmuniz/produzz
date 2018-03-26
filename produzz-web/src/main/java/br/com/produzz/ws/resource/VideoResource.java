@@ -1,6 +1,7 @@
 package br.com.produzz.ws.resource;
 
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -21,9 +22,12 @@ import org.jboss.resteasy.plugins.providers.multipart.MultipartFormDataInput;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.google.api.client.auth.oauth2.Credential;
+
 import br.com.produzz.entity.ContaCanal;
 import br.com.produzz.entity.Video;
 import br.com.produzz.enumeration.ECanal;
+import br.com.produzz.enumeration.EPrivacyStatus;
 import br.com.produzz.exception.GeneralException;
 import br.com.produzz.exception.ProduzzException;
 import br.com.produzz.requisicao.PublicacaoRequisicao;
@@ -34,6 +38,7 @@ import br.com.produzz.service.ContaCanalService;
 import br.com.produzz.service.VideoService;
 import br.com.produzz.util.Util;
 import br.com.produzz.youtube.Auth;
+import br.com.produzz.youtube.UploadThumbnail;
 import br.com.produzz.youtube.UploadVideo;
 import br.com.produzz.youtube.YouTubeAnalyticsReports;
 
@@ -165,8 +170,21 @@ public class VideoResource extends GenericResource {
     		try {
     			ContaCanal contaCanal = contaCanalService.findByContaCanal(req.getId(), ECanal.GOOGLE.getCodigo());
 
-    			UploadVideo.upload(
-    					Auth.renovar(contaCanal.getToken()));
+    			Credential credential = Auth.renovar(contaCanal.getToken());
+
+    			String idVideo = UploadVideo.upload(
+    					credential,
+    					req.getTitulo(),
+    					req.getDescricao(),
+    					getTags(req.getTags()),
+    					EPrivacyStatus.get(req.getPrivacidade()),
+    					service.findById(req.getIdVideo()).getVideos().get(0).getImagem(),
+    					null);
+
+    			if (!Util.isBlankOrNull(req.getIdThumbnail())) {
+    				UploadThumbnail.uploadThumbnail(credential, idVideo,
+    						service.findThumbnailById(req.getIdThumbnail()).getThumbnails().get(0).getImagem());
+    			}
 
     			retorno = build(Response.Status.OK,
     					service.publicar(req, contaCanal.getId()));
@@ -178,7 +196,21 @@ public class VideoResource extends GenericResource {
 
     		return retorno;
     }
-    
+
+    private List<String> getTags(final String tags) {
+    		List<String> lista = new ArrayList<String>();
+
+    		if (!Util.isBlankOrNull(tags)) {
+    			for (String item : tags.split("@")) {
+    				if (!Util.isBlankOrNull(item)) {
+    					lista.add(item);
+    				}
+    			}
+    		}
+
+    		return lista;
+    }
+   
     @GET
 	@Produces({ MediaType.APPLICATION_JSON })
 	@Path("/download/{filename}")
